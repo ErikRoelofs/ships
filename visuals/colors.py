@@ -1,3 +1,5 @@
 class COLORS:
-    HIT_LINE = 1
-    FIRE_ARC_LINE = 2
+    HIT_LINE = (255, 0, 0)
+    FIRE_ARC_LINE = (0, 255, 0)
+    HARDPOINT = (0, 0, 255)
+    TARGETING_POINT = (255, 255, 0)

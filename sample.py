@@ -8,6 +8,7 @@ import pygame
 from pygame.locals import *
 
 from logic.ship.ship import Ship
+from content.ships.demo import Demo
 
 if not pygame.image.get_extended():
     raise SystemExit("Requires the extended image loading from SDL_image")
@@ -131,98 +132,104 @@ def main():
     screen = pygame.display.set_mode(SCREENRECT.size, 0)
     clock = pygame.time.Clock()
 
+    demoship = Demo().getShip()
+
     while 1:
-        rect = pygame.draw.line(screen, (255, 255, 255), (50, 50), (100, 100), 3)
-        pygame.time.wait(50)
-        pygame.display.update([rect])
-
-    # Load the Resources
-    Img.background = load_image('background.gif', 0)
-    Img.shot = load_image('shot.gif', 1)
-    Img.bomb = load_image('bomb.gif', 1)
-    Img.danger = load_image('danger.gif', 1)
-    Img.alien = load_image('alien1.gif', 1)
-    Img.player = load_image('oldplayer.gif', 1)
-    Img.explosion = load_image('explosion1.gif', 1)
-
-    # Create the background
-    background = pygame.Surface(SCREENRECT.size)
-    for x in range(0, SCREENRECT.width, Img.background.get_width()):
-        background.blit(Img.background, (x, 0))
-    screen.blit(background, (0, 0))
-    pygame.display.flip()
-
-    # Initialize Game Actors
-    player = Player()
-    aliens = [Alien()]
-    shots = []
-    explosions = []
-
-    # Main loop
-    while player.alive or explosions:
-        clock.tick(FRAMES_PER_SEC)
-
-        # Gather Events
         pygame.event.pump()
+        clock.tick(FRAMES_PER_SEC)
+        demoship.debug_draw(screen)
+        pygame.display.update()
         keystate = pygame.key.get_pressed()
         if keystate[K_ESCAPE] or pygame.event.peek(QUIT):
             break
 
-        # Clear screen and update actors
-        for actor in [player] + aliens + shots + explosions:
-            actor.erase(screen, background)
-            actor.update()
-
-        # Clean Dead Explosions and Bullets
-        for e in explosions:
-            if e.life <= 0:
-                explosions.remove(e)
-        for s in shots:
-            if s.rect.top <= 0:
-                shots.remove(s)
-
-        # Move the player
-        direction = keystate[K_RIGHT] - keystate[K_LEFT]
-        player.move(direction)
-
-        # Create new shots
-        if not player.reloading and keystate[K_SPACE] and len(shots) < MAX_SHOTS:
-            shots.append(Shot(player))
-        player.reloading = keystate[K_SPACE]
-
-        # Create new alien
-        if not int(random.random() * ALIEN_ODDS):
-            aliens.append(Alien())
-
-        # Detect collisions
-        alienrects = []
-        for a in aliens:
-            alienrects.append(a.rect)
-
-        hit = player.rect.collidelist(alienrects)
-        if hit != -1:
-            alien = aliens[hit]
-            explosions.append(Explosion(alien))
-            explosions.append(Explosion(player))
-            aliens.remove(alien)
-            player.alive = 0
-        for shot in shots:
-            hit = shot.rect.collidelist(alienrects)
-            if hit != -1:
-                alien = aliens[hit]
-                explosions.append(Explosion(alien))
-                shots.remove(shot)
-                aliens.remove(alien)
-                break
-
-        # Draw everybody
-        for actor in [player] + aliens + shots + explosions:
-            actor.draw(screen)
-
-        pygame.display.update(dirtyrects)
-        dirtyrects = []
-
-    pygame.time.wait(50)
+    # Load the Resources
+    # Img.background = load_image('background.gif', 0)
+    # Img.shot = load_image('shot.gif', 1)
+    # Img.bomb = load_image('bomb.gif', 1)
+    # Img.danger = load_image('danger.gif', 1)
+    # Img.alien = load_image('alien1.gif', 1)
+    # Img.player = load_image('oldplayer.gif', 1)
+    # Img.explosion = load_image('explosion1.gif', 1)
+    #
+    # # Create the background
+    # background = pygame.Surface(SCREENRECT.size)
+    # for x in range(0, SCREENRECT.width, Img.background.get_width()):
+    #     background.blit(Img.background, (x, 0))
+    # screen.blit(background, (0, 0))
+    # pygame.display.flip()
+    #
+    # # Initialize Game Actors
+    # player = Player()
+    # aliens = [Alien()]
+    # shots = []
+    # explosions = []
+    #
+    # # Main loop
+    # while player.alive or explosions:
+    #     clock.tick(FRAMES_PER_SEC)
+    #
+    #     # Gather Events
+    #     pygame.event.pump()
+    #     keystate = pygame.key.get_pressed()
+    #     if keystate[K_ESCAPE] or pygame.event.peek(QUIT):
+    #         break
+    #
+    #     # Clear screen and update actors
+    #     for actor in [player] + aliens + shots + explosions:
+    #         actor.erase(screen, background)
+    #         actor.update()
+    #
+    #     # Clean Dead Explosions and Bullets
+    #     for e in explosions:
+    #         if e.life <= 0:
+    #             explosions.remove(e)
+    #     for s in shots:
+    #         if s.rect.top <= 0:
+    #             shots.remove(s)
+    #
+    #     # Move the player
+    #     direction = keystate[K_RIGHT] - keystate[K_LEFT]
+    #     player.move(direction)
+    #
+    #     # Create new shots
+    #     if not player.reloading and keystate[K_SPACE] and len(shots) < MAX_SHOTS:
+    #         shots.append(Shot(player))
+    #     player.reloading = keystate[K_SPACE]
+    #
+    #     # Create new alien
+    #     if not int(random.random() * ALIEN_ODDS):
+    #         aliens.append(Alien())
+    #
+    #     # Detect collisions
+    #     alienrects = []
+    #     for a in aliens:
+    #         alienrects.append(a.rect)
+    #
+    #     hit = player.rect.collidelist(alienrects)
+    #     if hit != -1:
+    #         alien = aliens[hit]
+    #         explosions.append(Explosion(alien))
+    #         explosions.append(Explosion(player))
+    #         aliens.remove(alien)
+    #         player.alive = 0
+    #     for shot in shots:
+    #         hit = shot.rect.collidelist(alienrects)
+    #         if hit != -1:
+    #             alien = aliens[hit]
+    #             explosions.append(Explosion(alien))
+    #             shots.remove(shot)
+    #             aliens.remove(alien)
+    #             break
+    #
+    #     # Draw everybody
+    #     for actor in [player] + aliens + shots + explosions:
+    #         actor.draw(screen)
+    #
+    #     pygame.display.update(dirtyrects)
+    #     dirtyrects = []
+    #
+    # pygame.time.wait(50)
 
 
 # if python says run, let's run!

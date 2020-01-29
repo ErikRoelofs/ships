@@ -4,3 +4,10 @@ class Ship:
         self.stats = stats
         self.hitzones = hitzones
         self.targetzones = targetzones
+
+    def debug_draw(self, surface):
+        for hitzone in self.hitzones:
+            hitzone.debug_draw(surface, self.location)
+
+        for targetZone in self.targetzones:
+            targetZone.debug_draw(surface, self.location)

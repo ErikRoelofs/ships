@@ -1,3 +1,5 @@
+import pygame
+
 from visuals.colors import COLORS
 
 class Line:
@@ -15,20 +17,26 @@ class Line:
 class HitLine(Line):
     def __init__(self, p1, p2):
         Line.__init__(self, p1, p2)
-        
-        
+
+    def debug_draw(self, surface, location):
+        return pygame.draw.line(
+            surface,
+            COLORS.HIT_LINE,
+            self.p1.from_location(location).as_tuple(),
+            self.p2.from_location(location).as_tuple(),
+            3
+        )
+
+
 class FireArcLine(Line):
     def __init__(self, p1, p2):
         Line.__init__(self, p1, p2)
-        
-        
-class DebugHitLine(HitLine):
-    def __init__(self, p1, p2):
-        HitLine.__init__(self, p1, p2)
-        self.color = COLORS.HIT_LINE
 
-
-class DebugFireArcLine(FireArcLine):
-    def __init__(self, p1, p2):
-        FireArcLine.__init__(self, p1, p2)
-        self.color = COLORS.FIRE_ARC_LINE
+    def debug_draw(self, surface, location):
+        return pygame.draw.line(
+            surface,
+            COLORS.FIRE_ARC_LINE,
+            self.p1.from_location(location).as_tuple(),
+            self.p2.from_location(location).as_tuple(),
+            3
+        )

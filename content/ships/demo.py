@@ -24,7 +24,7 @@ class Demo:
             [
                 TargetZone(
                     [
-                        FireArcLine(Point(10, 10), Point(100, 10))
+                        FireArcLine(Point(100, 100), Point(100, 10))
                     ],
                     [
                         WeaponPoint(75, 75)
@@ -35,3 +35,6 @@ class Demo:
                 )
             ]
         )
+
+    def getShip(self):
+        return self.ship
