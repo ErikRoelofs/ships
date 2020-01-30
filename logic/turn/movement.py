@@ -19,5 +19,6 @@ class MovementPlan:
         if self.active_segment.duration < 0:
             self.active_segment = self.segments.pop(0)
 
+
 def empty_movement_plan():
     return MovementPlan([MovementSegment(0, 0, 1000)])
