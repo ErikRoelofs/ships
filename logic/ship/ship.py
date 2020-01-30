@@ -1,5 +1,8 @@
+from logic.ship.hitzone import Hitzone
+
+
 class Ship:
-    def __init__(self, location, stats, hitzones, targetzones):
+    def __init__(self, location, stats, hitzones: [Hitzone], targetzones):
         # base stats
         self.stats = stats
         self.hitzones = hitzones
@@ -25,3 +28,9 @@ class Ship:
     def update(self, dt):
         self.location.advance(self.current_speed * dt)
         self.location.rotate(self.current_turn * dt)
+
+    def get_hittable_zones(self):
+        return list(map(
+            lambda x: x.from_location(self.location),
+            self.hitzones
+        ))

@@ -18,12 +18,11 @@ if not pygame.image.get_extended():
 
 # constants
 FRAMES_PER_SEC = 40
-SCREENRECT = pygame.Rect(0, 0, 640, 480)
+SCREENRECT = pygame.Rect(0, 0, 1200, 900)
 
 # some globals for friendly access
 dirtyrects = []  # list of update_rects
 next_tick = 0  # used for timing
-
 
 class Img: pass  # container for images
 
@@ -57,7 +56,10 @@ def main():
 
     demoship1 = Demo(Location(Point(150, 450), -0.2)).getShip()
     demoship2 = Demo(Location(Point(450, 250), 0)).getShip()
-    demoship1.set_motion(25, -0.1)
+    demoship1.set_motion(35, -0.2)
+
+    space_down = False
+    pause = False
     while 1:
         pygame.event.pump()
         clock.tick(FRAMES_PER_SEC)
@@ -65,13 +67,23 @@ def main():
         screen.fill((0, 0, 0))
         demoship1.debug_draw(screen)
         demoship2.debug_draw(screen)
-        demoship1.update(dt)
+
+        if not pause:
+            demoship1.update(dt)
+
+        for fire_zone in demoship1.targetzones:
+            fire_zone.debug_draw_targeting_lines(screen, demoship1.location, demoship2.get_hittable_zones(), 400)
 
         pygame.display.update()
         keystate = pygame.key.get_pressed()
         if keystate[K_ESCAPE] or pygame.event.peek(QUIT):
             break
-
+        if keystate[K_SPACE]:
+            if not space_down:
+                pause = not pause
+            space_down = True
+        else:
+            space_down = False
 
 # if python says run, let's run!
 if __name__ == '__main__':

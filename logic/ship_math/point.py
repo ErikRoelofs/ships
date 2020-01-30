@@ -34,6 +34,9 @@ class Point:
         self.x = self.x + x
         self.y = self.y + y
 
+    def __str__(self):
+        return '(' + str(self.x) + ', ' + str(self.y) + ')'
+
 
 class WeaponPoint(Point):
     def __init__(self, x, y):
