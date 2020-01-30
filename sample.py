@@ -55,14 +55,13 @@ def main():
     screen = pygame.display.set_mode(SCREENRECT.size, 0)
     clock = pygame.time.Clock()
 
-    demoship1 = Demo(Location(Point(150, 450), -25)).getShip()
+    demoship1 = Demo(Location(Point(150, 450), -0.2)).getShip()
     demoship2 = Demo(Location(Point(450, 250), 0)).getShip()
-    demoship1.set_motion(0, 0)
+    demoship1.set_motion(25, -0.1)
     while 1:
         pygame.event.pump()
         clock.tick(FRAMES_PER_SEC)
         dt = clock.get_time() / 1000
-        print("frame time: " + str(dt))
         screen.fill((0, 0, 0))
         demoship1.debug_draw(screen)
         demoship2.debug_draw(screen)

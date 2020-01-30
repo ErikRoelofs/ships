@@ -27,7 +27,7 @@ class Point:
         return Point(self.x + other_point.x, self.y + other_point.y)
 
     def from_location(self, location):
-        new_x, new_y = rotate(location.point.as_tuple(), self.as_tuple(), location.rotation)
+        new_x, new_y = rotate((0, 0), self.as_tuple(), location.rotation)
         return type(self)(location.x + new_x, location.y + new_y)
 
     def move(self, x, y):
@@ -41,6 +41,7 @@ class WeaponPoint(Point):
 
     def debug_draw(self, surface, location):
         pygame.draw.circle(surface, COLORS.HARDPOINT, self.from_location(location).as_int_tuple(), 3)
+
 
 class AimingPoint(Point):
     def __init__(self, x, y):

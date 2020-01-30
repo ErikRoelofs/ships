@@ -9,54 +9,59 @@ from logic.ship_math.point import Point, AimingPoint, WeaponPoint
 
 class Demo:
     def __init__(self, location):
+
+        height = 60
+        width = 120
+        center_x = 20
+        center_y = 0
+        top = -(0.5 * height) - center_y
+        left = -(0.5 * width) - center_x
+        bottom = (0.5 * height) - center_y
+        right = (0.5 * width) - center_x
+
         self.ship = Ship(
             location,
             Stats(5, 6, 3, 3, Engine(4, 15)),
             [
                 Hitzone( #up
-                    AimingPoint(0, -20),
+                    AimingPoint(-center_x, 0.8 * top),
                     [
-                        HitLine(Point(-30, -40), Point(30, -40))
+                        HitLine(Point(left, top), Point(right, top))
                     ],
                     3
                 ),
                 Hitzone( #right
-                    AimingPoint(20, 20),
+                    AimingPoint(0.8 * right, 0),
                     [
-                        HitLine(Point(30, -40), Point(30, 80))
+                        HitLine(Point(right, top), Point(right, bottom))
                     ],
                     3
                 ),
                 Hitzone( #down
-                    AimingPoint(0, 70),
+                    AimingPoint(-center_x, 0.8 * bottom),
                     [
-                        HitLine(Point(30, 80), Point(-30, 80))
+                        HitLine(Point(right, bottom), Point(left, bottom))
                     ],
                     3
                 ),
                 Hitzone( #left
-                    AimingPoint(-20, 20),
+                    AimingPoint(0.8 * left, 0),
                     [
-                        HitLine(Point(-30, -40), Point(-30, 80))
+                        HitLine(Point(left, bottom), Point(left, top))
                     ],
                     3
                 ),
             ],
             [
-                # TL -30, -40 (origin = 0, 0, center = 0, 20
-                # TR  30, -40
-                # BL -30, 80
-                # BR 30, 80
-
                 TargetZone(  # up
                     [
-                        FireArcLine(Point(0, 20), Point(-30, -40)),
-                        FireArcLine(Point(0, 20), Point(30, -40)),
+                        FireArcLine(Point(-center_x, -center_y), Point(left, top)),
+                        FireArcLine(Point(-center_x, -center_y), Point(right, top)),
                     ],
                     [
-                        WeaponPoint(-15, -35),
-                        WeaponPoint(0, -35),
-                        WeaponPoint(15, -35),
+                        WeaponPoint(-center_x + (0.25 * width), 0.9 * top),
+                        WeaponPoint(-center_x, 0.9 * top),
+                        WeaponPoint(-center_x + (-0.25 * width), 0.9 * top),
                     ],
                     [
                         Weapon()
@@ -64,14 +69,13 @@ class Demo:
                 ),
                 TargetZone(  # right
                     [
-                        FireArcLine(Point(0, 20), Point(30, 80)),
-                        FireArcLine(Point(0, 20), Point(30, -40)),
+                        FireArcLine(Point(-center_x, -center_y), Point(right, top)),
+                        FireArcLine(Point(-center_x, -center_y), Point(right, bottom)),
                     ],
                     [
-                        WeaponPoint(25, -20),
-                        WeaponPoint(25, 0),
-                        WeaponPoint(25, 20),
-                        WeaponPoint(25, 40),
+                        WeaponPoint(0.9 * right, -center_y + (0.25 * height)),
+                        WeaponPoint(0.9 * right, -center_y),
+                        WeaponPoint(0.9 * right, -center_y + (-0.25 * height)),
                     ],
                     [
                         Weapon()
@@ -79,13 +83,13 @@ class Demo:
                 ),
                 TargetZone(  # down
                     [
-                        FireArcLine(Point(0, 20), Point(-30, 80)),
-                        FireArcLine(Point(0, 20), Point(30, 80)),
+                        FireArcLine(Point(-center_x, -center_y), Point(right, bottom)),
+                        FireArcLine(Point(-center_x, -center_y), Point(left, bottom)),
                     ],
                     [
-                        WeaponPoint(-15, 75),
-                        WeaponPoint(0, 75),
-                        WeaponPoint(15, 75),
+                        WeaponPoint(-center_x + (0.25 * width), 0.9 * bottom),
+                        WeaponPoint(-center_x, 0.9 * bottom),
+                        WeaponPoint(-center_x + (-0.25 * width), 0.9 * bottom),
                     ],
                     [
                         Weapon()
@@ -93,14 +97,13 @@ class Demo:
                 ),
                 TargetZone(  # left
                     [
-                        FireArcLine(Point(0, 20), Point(-30, 80)),
-                        FireArcLine(Point(0, 20), Point(-30, -40)),
+                        FireArcLine(Point(-center_x, -center_y), Point(left, top)),
+                        FireArcLine(Point(-center_x, -center_y), Point(left, bottom)),
                     ],
                     [
-                        WeaponPoint(-25, -20),
-                        WeaponPoint(-25, 0),
-                        WeaponPoint(-25, 20),
-                        WeaponPoint(-25, 40),
+                        WeaponPoint(0.9 * left, -center_y + (0.25 * height)),
+                        WeaponPoint(0.9 * left, -center_y),
+                        WeaponPoint(0.9 * left, -center_y + (-0.25 * height)),
                     ],
                     [
                         Weapon()

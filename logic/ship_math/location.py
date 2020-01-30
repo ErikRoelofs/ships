@@ -19,7 +19,6 @@ class Location:
         self.x += dx
         self.y += dy
         self.point = Point(self.x, self.y)
-        print("advancing location by " + str(distance) + " with " + str(dx) + ", " + str(dy))
 
     def rotate(self, rotation):
         self.rotation += rotation
