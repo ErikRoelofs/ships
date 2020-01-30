@@ -58,7 +58,7 @@ def main():
     clock = pygame.time.Clock()
 
     demoship1 = Demo(Location(Point(150, 450), -0.2)).getShip()
-    demoship2 = Demo(Location(Point(450, 250), 0)).getShip()
+    demoship2 = Demo(Location(Point(450, 250), 0.001)).getShip()
 
     turn = Turn(10, [demoship1, demoship2])
 
@@ -66,7 +66,7 @@ def main():
         MovementSegment(40, 0.2, 2),
         MovementSegment(20, -0.2, 2),
         MovementSegment(20, 0.1, 2),
-        MovementSegment(60, -0.3, 2),
+        MovementSegment(60, -0.2, 4),
     ])
     plan = Plan(turn)
     plan.set_movement_plan(movement_plan)
@@ -88,8 +88,16 @@ def main():
         demoship1.debug_draw(screen)
         demoship2.debug_draw(screen)
 
-        for fire_zone in demoship1.targetzones:
-            fire_zone.debug_draw_targeting_lines(screen, demoship1.location, demoship2.get_hittable_zones(), 400)
+        #for fire_zone in demoship1.targetzones:
+        #    fire_zone.debug_draw_targeting_lines(screen, demoship1.location, demoship2.get_hittable_zones(), 400)
+        demoship1.targetzones[0].debug_draw_specific_targeting_line(
+            screen,
+            demoship1.targetzones[0].hardpoints[1],
+            demoship1.location,
+            demoship2.get_hittable_zones(),
+            400
+        )
+
 
         pygame.display.update()
         keystate = pygame.key.get_pressed()

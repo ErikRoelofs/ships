@@ -18,34 +18,35 @@ class Demo:
         left = -(0.5 * width) - center_x
         bottom = (0.5 * height) - center_y
         right = (0.5 * width) - center_x
+        aim_point_offset = 0.85
 
         self.ship = Ship(
             location,
-            Stats(5, 6, 3, 3, Engine(4, 15)),
+            Stats(5, 6, 3, 3, Engine(40, 0.2, 15, 0.1)),
             [
                 Hitzone( #up
-                    AimingPoint(-center_x, 0.8 * top),
+                    AimingPoint(-center_x, aim_point_offset * top),
                     [
                         HitLine(Point(left, top), Point(right, top))
                     ],
                     3
                 ),
                 Hitzone( #right
-                    AimingPoint(0.8 * right, 0),
+                    AimingPoint(aim_point_offset * right, 0),
                     [
                         HitLine(Point(right, top), Point(right, bottom))
                     ],
                     3
                 ),
                 Hitzone( #down
-                    AimingPoint(-center_x, 0.8 * bottom),
+                    AimingPoint(-center_x, aim_point_offset * bottom),
                     [
                         HitLine(Point(right, bottom), Point(left, bottom))
                     ],
                     3
                 ),
                 Hitzone( #left
-                    AimingPoint(0.8 * left, 0),
+                    AimingPoint(aim_point_offset * left, 0),
                     [
                         HitLine(Point(left, bottom), Point(left, top))
                     ],

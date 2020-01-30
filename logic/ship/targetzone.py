@@ -23,7 +23,7 @@ class TargetZone:
         return valid_targets
 
     def is_valid_target(self, my_location: Location, hardpoint: WeaponPoint, target, range):
-        print = lambda x: x
+        #print = lambda x: x
         # range check
         target_line = get_target_line(my_location, hardpoint, target)
         print("Targetline: %s" % target_line)
@@ -64,3 +64,12 @@ class TargetZone:
                 if self.is_valid_target(location, hardpoint, target, range):
                     target_line = get_target_line(location, hardpoint, target)
                     target_line.debug_draw_raw(surface, color=(0, 255, 0))
+
+    def debug_draw_specific_targeting_line(self, surface, hardpoint, location, targets, range):
+        for target in targets:
+            if self.is_valid_target(location, hardpoint, target, range):
+                target_line = get_target_line(location, hardpoint, target)
+                target_line.debug_draw_raw(surface, color=(0, 255, 0))
+            else:
+                target_line = get_target_line(location, hardpoint, target)
+                target_line.debug_draw_raw(surface, color=(255, 0, 0))

@@ -12,8 +12,6 @@ class Ship (Entity):
 
         # active information
         self.location = location
-        self.current_speed = 0
-        self.current_turn = 0
         self.plan = None
 
     def debug_draw(self, surface):
@@ -27,7 +25,7 @@ class Ship (Entity):
     def update(self, dt):
         move_plan = self.plan.movement_plan
         move_plan.update(dt)
-        heading = move_plan.get_current_heading()
+        heading = self.stats.engines.get_heading_from_plan(move_plan, dt)
         self.location.advance(heading[0] * dt)
         self.location.rotate(heading[1] * dt)
 
