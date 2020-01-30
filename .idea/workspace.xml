@@ -1,21 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ce57fabd-7277-4b5a-826b-590c54b4e9d4" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/Erik.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/ships.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ships.iml" afterDir="false" />
+    <list default="true" id="ce57fabd-7277-4b5a-826b-590c54b4e9d4" name="Default" comment="Some debug drawing can happen">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/content/ships/demo.py" beforeDir="false" afterPath="$PROJECT_DIR$/content/ships/demo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logic/ship/hitzone.py" beforeDir="false" afterPath="$PROJECT_DIR$/logic/ship/hitzone.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logic/ship/ship.py" beforeDir="false" afterPath="$PROJECT_DIR$/logic/ship/ship.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logic/ship/targetzone.py" beforeDir="false" afterPath="$PROJECT_DIR$/logic/ship/targetzone.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logic/ship_math/line.py" beforeDir="false" afterPath="$PROJECT_DIR$/logic/ship_math/line.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logic/ship_math/location.py" beforeDir="false" afterPath="$PROJECT_DIR$/logic/ship_math/location.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logic/ship_math/point.py" beforeDir="false" afterPath="$PROJECT_DIR$/logic/ship_math/point.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sample.py" beforeDir="false" afterPath="$PROJECT_DIR$/sample.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/visuals/colors.py" beforeDir="false" afterPath="$PROJECT_DIR$/visuals/colors.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,13 +61,25 @@
       <option name="presentableId" value="Default" />
       <updated>1580283514513</updated>
     </task>
+    <task id="LOCAL-00001" summary="Some debug drawing can happen">
+      <created>1580329877112</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1580329877112</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Some debug drawing can happen" />
+    <option name="LAST_COMMIT_MESSAGE" value="Some debug drawing can happen" />
+  </component>
   <component name="WindowStateProjectService">
-    <state x="500" y="60" width="1312" height="938" key="CommitChangelistDialog2" timestamp="1580329871470">
+    <state x="500" y="60" width="1312" height="938" key="CommitChangelistDialog2" timestamp="1580366514216">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="500" y="60" width="1312" height="938" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1580329871470" />
+    <state x="500" y="60" width="1312" height="938" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1580366514216" />
     <state x="477" y="138" width="998" height="715" key="SettingsEditor" timestamp="1580328186967">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

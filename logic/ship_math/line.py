@@ -24,7 +24,7 @@ class HitLine(Line):
             COLORS.HIT_LINE,
             self.p1.from_location(location).as_tuple(),
             self.p2.from_location(location).as_tuple(),
-            3
+            2
         )
 
 
@@ -38,5 +38,5 @@ class FireArcLine(Line):
             COLORS.FIRE_ARC_LINE,
             self.p1.from_location(location).as_tuple(),
             self.p2.from_location(location).as_tuple(),
-            3
+            2
         )
