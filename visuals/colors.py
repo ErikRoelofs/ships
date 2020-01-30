@@ -1,4 +1,5 @@
 class COLORS:
+    REGULAR_POINT = (255, 255, 255)
     HIT_LINE = (255, 0, 0)
     FIRE_ARC_LINE = (0, 255, 0)
     HARDPOINT = (0, 0, 255)

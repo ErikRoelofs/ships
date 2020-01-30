@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ce57fabd-7277-4b5a-826b-590c54b4e9d4" name="Default" comment="Some debug drawing can happen">
+    <list default="true" id="ce57fabd-7277-4b5a-826b-590c54b4e9d4" name="Default" comment="Setting up a proper ship layout">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content/ships/demo.py" beforeDir="false" afterPath="$PROJECT_DIR$/content/ships/demo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic/ship/ship.py" beforeDir="false" afterPath="$PROJECT_DIR$/logic/ship/ship.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logic/ship_math/line.py" beforeDir="false" afterPath="$PROJECT_DIR$/logic/ship_math/line.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic/ship_math/location.py" beforeDir="false" afterPath="$PROJECT_DIR$/logic/ship_math/location.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic/ship_math/point.py" beforeDir="false" afterPath="$PROJECT_DIR$/logic/ship_math/point.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sample.py" beforeDir="false" afterPath="$PROJECT_DIR$/sample.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/visuals/colors.py" beforeDir="false" afterPath="$PROJECT_DIR$/visuals/colors.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,18 +72,26 @@
       <option name="project" value="LOCAL" />
       <updated>1580329877112</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Setting up a proper ship layout">
+      <created>1580373418299</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1580373418299</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Some debug drawing can happen" />
-    <option name="LAST_COMMIT_MESSAGE" value="Some debug drawing can happen" />
+    <MESSAGE value="Setting up a proper ship layout" />
+    <option name="LAST_COMMIT_MESSAGE" value="Setting up a proper ship layout" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="500" y="60" width="1312" height="938" key="CommitChangelistDialog2" timestamp="1580366514216">
+    <state x="500" y="60" width="1312" height="938" key="CommitChangelistDialog2" timestamp="1580373415476">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="500" y="60" width="1312" height="938" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1580366514216" />
+    <state x="500" y="60" width="1312" height="938" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1580373415476" />
     <state x="477" y="138" width="998" height="715" key="SettingsEditor" timestamp="1580328186967">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
