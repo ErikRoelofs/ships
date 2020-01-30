@@ -11,6 +11,9 @@ from logic.ship.ship import Ship
 from content.ships.demo import Demo
 from logic.ship_math.location import Location
 from logic.ship_math.point import Point
+from logic.turn.movement import MovementPlan, MovementSegment
+from logic.turn.plan import Plan
+from logic.turn.turn import Turn
 
 if not pygame.image.get_extended():
     raise SystemExit("Requires the extended image loading from SDL_image")
@@ -56,7 +59,20 @@ def main():
 
     demoship1 = Demo(Location(Point(150, 450), -0.2)).getShip()
     demoship2 = Demo(Location(Point(450, 250), 0)).getShip()
-    demoship1.set_motion(35, -0.2)
+
+    turn = Turn(10, [demoship1, demoship2])
+
+    movement_plan = MovementPlan([
+        MovementSegment(40, 0.2, 2),
+        MovementSegment(20, -0.2, 2),
+        MovementSegment(20, 0.1, 2),
+        MovementSegment(60, -0.3, 2),
+    ])
+    plan = Plan(turn)
+    plan.set_movement_plan(movement_plan)
+
+    demoship1.set_plan(plan)
+    demoship2.set_plan(Plan(turn))
 
     space_down = False
     pause = False
@@ -65,11 +81,12 @@ def main():
         clock.tick(FRAMES_PER_SEC)
         dt = clock.get_time() / 1000
         screen.fill((0, 0, 0))
-        demoship1.debug_draw(screen)
-        demoship2.debug_draw(screen)
 
         if not pause:
-            demoship1.update(dt)
+            turn.update(dt)
+
+        demoship1.debug_draw(screen)
+        demoship2.debug_draw(screen)
 
         for fire_zone in demoship1.targetzones:
             fire_zone.debug_draw_targeting_lines(screen, demoship1.location, demoship2.get_hittable_zones(), 400)
