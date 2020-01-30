@@ -8,7 +8,6 @@ from visuals.colors import COLORS
 
 def slope(p1, p2):
     if (p2[0] - p1[0]) == 0:
-        print('high sloping -> %s - %s' % (p2, p1))
         return 1e10
     return (p2[1] - p1[1]) * 1. / (p2[0] - p1[0])
 
@@ -34,25 +33,26 @@ def intersect(line1, line2):
 
 
 def segment_intersect(line1, line2):
+    # print = lambda x: x
     intersection_pt = intersect(line1, line2)
-#    print("point of intersection: %s" % Point(intersection_pt[0], intersection_pt[1]))
+    print("point of intersection: %s" % Point(intersection_pt[0], intersection_pt[1]))
 
     if (line1[0][0] < line1[1][0]):
         if intersection_pt[0] < line1[0][0] or intersection_pt[0] > line1[1][0]:
-#            print( "exit 1" )
+            print("exit 1: %s < %s or %s > %s" % (intersection_pt[0], line1[0][0], intersection_pt[0], line1[1][0]))
             return None
     else:
         if intersection_pt[0] > line1[0][0] or intersection_pt[0] < line1[1][0]:
-#            print("exit 2")
+            print("exit 2: %s > %s or %s < %s" % (intersection_pt[0], line1[0][0], intersection_pt[0], line1[1][0]))
             return None
 
     if (line2[0][0] < line2[1][0]):
         if intersection_pt[0] < line2[0][0] or intersection_pt[0] > line2[1][0]:
-#            print("exit 3")
+            print("exit 3: %s < %s or %s > %s" % (intersection_pt[0], line2[0][0], intersection_pt[0], line2[1][0]))
             return None
     else:
         if intersection_pt[0] > line2[0][0] or intersection_pt[0] < line2[1][0]:
-#            print("exit 4")
+            print("exit 4: %s > %s or %s < %s" % (intersection_pt[0], line2[0][0], intersection_pt[0], line2[1][0]))
             return None
 
     return intersection_pt
