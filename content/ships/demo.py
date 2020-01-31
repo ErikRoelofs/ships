@@ -2,13 +2,13 @@ from logic.ship.hitzone import Hitzone
 from logic.ship.ship import Ship
 from logic.ship.stats import Stats, Engine
 from logic.ship.targetzone import TargetZone
-from logic.ship.weapon import Weapon
+from logic.ship.weapon import Weapon, BeamLaser
 from logic.ship_math.line import HitLine, FireArcLine
 from logic.ship_math.point import Point, AimingPoint, WeaponPoint
 
 
 class Demo:
-    def __init__(self, location):
+    def __init__(self, location, faction):
 
         height = 60
         width = 120
@@ -65,7 +65,7 @@ class Demo:
                         WeaponPoint(-center_x + (-0.25 * width), 0.9 * top),
                     ],
                     [
-                        Weapon()
+                        BeamLaser(), BeamLaser(), BeamLaser()
                     ]
                 ),
                 TargetZone(  # right
@@ -79,7 +79,7 @@ class Demo:
                         WeaponPoint(0.9 * right, -center_y + (-0.25 * height)),
                     ],
                     [
-                        Weapon()
+                        BeamLaser(), BeamLaser(), BeamLaser(), BeamLaser()
                     ]
                 ),
                 TargetZone(  # down
@@ -93,7 +93,7 @@ class Demo:
                         WeaponPoint(-center_x + (-0.25 * width), 0.9 * bottom),
                     ],
                     [
-                        Weapon()
+                        BeamLaser(), BeamLaser(), BeamLaser(), BeamLaser()
                     ]
                 ),
                 TargetZone(  # left
@@ -107,10 +107,11 @@ class Demo:
                         WeaponPoint(0.9 * left, -center_y + (-0.25 * height)),
                     ],
                     [
-                        Weapon()
+                        BeamLaser(), BeamLaser(), BeamLaser()
                     ]
                 ),
-            ]
+            ],
+            faction
         )
 
     def getShip(self):

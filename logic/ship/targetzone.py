@@ -20,7 +20,7 @@ class TargetZone:
         for point in self.hardpoints:
             for target in targets:
                 if self.is_valid_target(my_location, point, target, range):
-                    valid_targets.append(target)
+                    valid_targets.append((point, target))
         return valid_targets
 
     def is_valid_target(self, my_location: Location, hardpoint: WeaponPoint, target, range):

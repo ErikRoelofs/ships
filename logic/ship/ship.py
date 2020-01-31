@@ -1,10 +1,14 @@
 from logic.entity import Entity
+from logic.ship.firecontrol import FireControl
 from logic.ship.hitzone import Hitzone
+from logic.ship.stats import Stats
+from logic.ship.targetzone import TargetZone
+from logic.ship_math.location import Location
 from logic.turn.plan import Plan
 
 
 class Ship (Entity):
-    def __init__(self, location, stats, hitzones: [Hitzone], targetzones):
+    def __init__(self, location: Location, stats: Stats, hitzones: [Hitzone], targetzones: [TargetZone], faction: int):
         # base stats
         self.stats = stats
         self.hitzones = hitzones
@@ -13,6 +17,8 @@ class Ship (Entity):
         # active information
         self.location = location
         self.plan = None
+        self.fire_control = FireControl(self)
+        self.faction = faction
 
     def debug_draw(self, surface):
         self.location.debug_draw(surface)
@@ -28,6 +34,7 @@ class Ship (Entity):
         heading = self.stats.engines.get_heading_from_plan(move_plan, dt)
         self.location.advance(heading[0] * dt)
         self.location.rotate(heading[1] * dt)
+        self.fire_control.update(dt)
 
     def get_hittable_zones(self):
         return list(map(
@@ -39,4 +46,4 @@ class Ship (Entity):
         self.plan = plan
 
     def execute_plan(self):
-        pass  # no initial executable statements yet
+        self.fire_control.prepare(self.plan.turn)

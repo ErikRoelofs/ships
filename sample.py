@@ -11,6 +11,7 @@ from logic.ship.ship import Ship
 from content.ships.demo import Demo
 from logic.ship_math.location import Location
 from logic.ship_math.point import Point
+from logic.space.space import Space
 from logic.turn.movement import MovementPlan, MovementSegment
 from logic.turn.plan import Plan
 from logic.turn.turn import Turn
@@ -57,8 +58,11 @@ def main():
     screen = pygame.display.set_mode(SCREENRECT.size, 0)
     clock = pygame.time.Clock()
 
-    demoship1 = Demo(Location(Point(150, 450), -0.2)).getShip()
-    demoship2 = Demo(Location(Point(450, 250), 0.001)).getShip()
+    demoship1 = Demo(Location(Point(150, 450), -0.2), 1).getShip()
+    demoship2 = Demo(Location(Point(450, 250), 0.001), 2).getShip()
+
+    Space.register_ship(demoship1)
+    Space.register_ship(demoship2)
 
     turn = Turn(10, [demoship1, demoship2])
 
@@ -73,6 +77,7 @@ def main():
 
     demoship1.set_plan(plan)
     demoship2.set_plan(Plan(turn))
+    demoship1.execute_plan()
 
     space_down = False
     pause = False
