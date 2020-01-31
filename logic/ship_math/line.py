@@ -1,6 +1,7 @@
 import pygame
 import math
 
+from logic.debug.debug import Debug
 from logic.ship_math.location import Location
 from logic.ship_math.point import Point
 from visuals.colors import COLORS
@@ -29,30 +30,30 @@ def intersect(line1, line2):
         x = (b2 - b1) / (m1 - m2)
     y = m1 * x + b1
     y2 = m2 * x + b2
-    return int(round(x)), int(round(y))
+    return x, y
 
 
 def segment_intersect(line1, line2):
-    # print = lambda x: x
+    debug = Debug()
     intersection_pt = intersect(line1, line2)
-    print("point of intersection: %s" % Point(intersection_pt[0], intersection_pt[1]))
+    debug.log("point of intersection: %s" % Point(intersection_pt[0], intersection_pt[1]), debug.MATH)
 
     if (line1[0][0] < line1[1][0]):
         if intersection_pt[0] < line1[0][0] or intersection_pt[0] > line1[1][0]:
-            print("exit 1: %s < %s or %s > %s" % (intersection_pt[0], line1[0][0], intersection_pt[0], line1[1][0]))
+            debug.log("exit 1: %s < %s or %s > %s" % (intersection_pt[0], line1[0][0], intersection_pt[0], line1[1][0]), debug.MATH)
             return None
     else:
         if intersection_pt[0] > line1[0][0] or intersection_pt[0] < line1[1][0]:
-            print("exit 2: %s > %s or %s < %s" % (intersection_pt[0], line1[0][0], intersection_pt[0], line1[1][0]))
+            debug.log("exit 2: %s > %s or %s < %s" % (intersection_pt[0], line1[0][0], intersection_pt[0], line1[1][0]), debug.MATH)
             return None
 
     if (line2[0][0] < line2[1][0]):
         if intersection_pt[0] < line2[0][0] or intersection_pt[0] > line2[1][0]:
-            print("exit 3: %s < %s or %s > %s" % (intersection_pt[0], line2[0][0], intersection_pt[0], line2[1][0]))
+            debug.log("exit 3: %s < %s or %s > %s" % (intersection_pt[0], line2[0][0], intersection_pt[0], line2[1][0]), debug.MATH)
             return None
     else:
         if intersection_pt[0] > line2[0][0] or intersection_pt[0] < line2[1][0]:
-            print("exit 4: %s > %s or %s < %s" % (intersection_pt[0], line2[0][0], intersection_pt[0], line2[1][0]))
+            debug.log("exit 4: %s > %s or %s < %s" % (intersection_pt[0], line2[0][0], intersection_pt[0], line2[1][0]), debug.MATH)
             return None
 
     return intersection_pt

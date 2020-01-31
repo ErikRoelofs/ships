@@ -1,3 +1,4 @@
+from logic.debug.debug import Debug
 from logic.ship.hitzone import Hitzone
 from logic.ship_math.line import Line
 from logic.ship_math.location import Location
@@ -23,33 +24,33 @@ class TargetZone:
         return valid_targets
 
     def is_valid_target(self, my_location: Location, hardpoint: WeaponPoint, target, range):
-        #print = lambda x: x
+        debug = Debug()
         # range check
         target_line = get_target_line(my_location, hardpoint, target)
-        print("Targetline: %s" % target_line)
+        debug.log("Targetline: %s" % target_line, debug.MATH)
 
         if target_line.length() > range:
-            print("Line length: %s versus range of %s; cannot reach!" % (target_line.length(), range))
+            debug.log("Line length: %s versus range of %s; cannot reach!" % (target_line.length(), range), debug.MATH)
             return False
 
         # intersects at least one hitline check
         intersects_hit_line = False
         for hitline in target.hit_lines:
-            print("Hitline: %s " % hitline)
+            debug.log("Hitline: %s " % hitline, debug.MATH)
             if hitline.intersects(target_line):
                 intersects_hit_line = True
 
         if not intersects_hit_line:
-            print("Not intersecting any of the hit-lines!")
+            debug.log("Not intersecting any of the hit-lines!", debug.MATH)
             return False
 
         # does not intersect the (extended) fire arcs
         for fire_arc_line in self.fire_arc_lines:
             if fire_arc_line.extended_by(range).from_location(my_location).intersects(target_line):
-                print("Crossing one of our own fire arcs!")
+                debug.log("Crossing one of our own fire arcs!", debug.MATH)
                 return False
 
-        print("Valid shot!")
+        debug.log("Valid shot!", debug.MATH)
         return True
 
     def debug_draw(self, surface, location):

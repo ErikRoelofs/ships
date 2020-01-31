@@ -88,15 +88,8 @@ def main():
             demoship1.debug_draw(screen)
             demoship2.debug_draw(screen)
 
-            #for fire_zone in demoship1.targetzones:
-            #    fire_zone.debug_draw_targeting_lines(screen, demoship1.location, demoship2.get_hittable_zones(), 400)
-            demoship1.targetzones[0].debug_draw_specific_targeting_line(
-                screen,
-                demoship1.targetzones[0].hardpoints[1],
-                demoship1.location,
-                demoship2.get_hittable_zones(),
-                400
-            )
+            for fire_zone in demoship1.targetzones:
+                fire_zone.debug_draw_targeting_lines(screen, demoship1.location, demoship2.get_hittable_zones(), 400)
 
             pygame.display.update()
 
