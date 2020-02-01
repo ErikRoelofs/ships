@@ -14,6 +14,10 @@ class TargetZone:
         self.fire_arc_lines = fire_arc_lines
         self.hardpoints = hardpoints
         self.weapons = weapons
+        self.ship = None
+
+    def link_to_ship(self, ship):
+        self.ship = ship
 
     def get_valid_targets(self, my_location, targets, range):
         valid_targets = []

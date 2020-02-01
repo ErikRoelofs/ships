@@ -24,37 +24,41 @@ class Demo:
             location,
             Stats(5, 6, 3, 3, Engine(40, 0.2, 15, 0.1)),
             [
-                Hitzone( #up
+                Hitzone(
                     AimingPoint(-center_x, aim_point_offset * top),
                     [
                         HitLine(Point(left, top), Point(right, top))
                     ],
-                    3
+                    1,
+                    'up @ %s' % faction
                 ),
-                Hitzone( #right
+                Hitzone(
                     AimingPoint(aim_point_offset * right, 0),
                     [
                         HitLine(Point(right, top), Point(right, bottom))
                     ],
-                    3
+                    1,
+                    'right @ %s' % faction
                 ),
-                Hitzone( #down
+                Hitzone(
                     AimingPoint(-center_x, aim_point_offset * bottom),
                     [
                         HitLine(Point(right, bottom), Point(left, bottom))
                     ],
-                    3
+                    1,
+                    'down @ %s' % faction
                 ),
-                Hitzone( #left
+                Hitzone(
                     AimingPoint(aim_point_offset * left, 0),
                     [
                         HitLine(Point(left, bottom), Point(left, top))
                     ],
-                    3
+                    1,
+                    'left @ %s' % faction
                 ),
             ],
             [
-                TargetZone(  # up
+                TargetZone(
                     [
                         FireArcLine(Point(-center_x, -center_y), Point(left, top)),
                         FireArcLine(Point(-center_x, -center_y), Point(right, top)),
@@ -65,10 +69,14 @@ class Demo:
                         WeaponPoint(-center_x + (-0.25 * width), 0.9 * top),
                     ],
                     [
-                        BeamLaser(), BeamLaser(), BeamLaser()
+                        BeamLaser(), BeamLaser(), BeamLaser(),
+                        BeamLaser(), BeamLaser(), BeamLaser(),
+                        BeamLaser(), BeamLaser(), BeamLaser(),
+                        BeamLaser(), BeamLaser(), BeamLaser(),
+                        BeamLaser(), BeamLaser(), BeamLaser(),
                     ]
                 ),
-                TargetZone(  # right
+                TargetZone(
                     [
                         FireArcLine(Point(-center_x, -center_y), Point(right, top)),
                         FireArcLine(Point(-center_x, -center_y), Point(right, bottom)),
@@ -82,7 +90,7 @@ class Demo:
                         BeamLaser(), BeamLaser(), BeamLaser(), BeamLaser()
                     ]
                 ),
-                TargetZone(  # down
+                TargetZone(
                     [
                         FireArcLine(Point(-center_x, -center_y), Point(right, bottom)),
                         FireArcLine(Point(-center_x, -center_y), Point(left, bottom)),
@@ -96,7 +104,7 @@ class Demo:
                         BeamLaser(), BeamLaser(), BeamLaser(), BeamLaser()
                     ]
                 ),
-                TargetZone(  # left
+                TargetZone(
                     [
                         FireArcLine(Point(-center_x, -center_y), Point(left, top)),
                         FireArcLine(Point(-center_x, -center_y), Point(left, bottom)),

@@ -36,7 +36,7 @@ class FireControl:
                 potential_shots = zone.get_valid_targets(self.ship.location, targets, weapon.range())
                 if len(potential_shots) > 0:
                     final_target = choice(potential_shots)
-                    weapon.fire(self.ship.location, final_target[0], final_target[1])
+                    weapon.fire(self.ship, final_target[0], final_target[1])
                 self.fire_solutions.remove(solution)
 
 

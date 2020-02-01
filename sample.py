@@ -2,16 +2,13 @@
 
 # import
 import os.path
-import random
 
 import pygame
 from pygame.locals import *
 
-from logic.ship.ship import Ship
 from content.ships.demo import Demo
 from logic.ship_math.location import Location
 from logic.ship_math.point import Point
-from logic.space.space import Space
 from logic.turn.movement import MovementPlan, MovementSegment
 from logic.turn.plan import Plan
 from logic.turn.turn import Turn
@@ -58,13 +55,10 @@ def main():
     screen = pygame.display.set_mode(SCREENRECT.size, 0)
     clock = pygame.time.Clock()
 
+    turn = Turn(10)
+
     demoship1 = Demo(Location(Point(150, 450), -0.2), 1).getShip()
     demoship2 = Demo(Location(Point(450, 250), 0.001), 2).getShip()
-
-    Space.register_ship(demoship1)
-    Space.register_ship(demoship2)
-
-    turn = Turn(10, [demoship1, demoship2])
 
     movement_plan = MovementPlan([
         MovementSegment(40, 0.2, 2),
@@ -89,12 +83,13 @@ def main():
 
         if not pause:
             turn.update(dt)
+            turn.draw(screen)
 
             demoship1.debug_draw(screen)
             demoship2.debug_draw(screen)
 
-            for fire_zone in demoship1.targetzones:
-                fire_zone.debug_draw_targeting_lines(screen, demoship1.location, demoship2.get_hittable_zones(), 400)
+            #for fire_zone in demoship1.targetzones:
+            #    fire_zone.debug_draw_targeting_lines(screen, demoship1.location, demoship2.get_hittable_zones(), 400)
 
             pygame.display.update()
 

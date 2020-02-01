@@ -5,10 +5,16 @@ from logic.ship_math.point import AimingPoint
 
 class Hitzone:
 
-    def __init__(self, aiming_point: AimingPoint, hit_lines: [HitLine], shields: int):
+    def __init__(self, aiming_point: AimingPoint, hit_lines: [HitLine], shields: int, name: str, origin=None):
         self.aiming_point = aiming_point
         self.hit_lines = hit_lines
         self.shields = shields
+        self.ship = None
+        self.name = name
+        self.origin = origin
+
+    def link_to_ship(self, ship):
+        self.ship = ship
 
     def debug_draw(self, surface, location: Location):
         for line in self.hit_lines:
@@ -20,5 +26,18 @@ class Hitzone:
         return Hitzone(
             self.aiming_point.from_location(my_location),
             list(map(lambda x: x.from_location(my_location), self.hit_lines)),
-            self.shields
+            self.shields,
+            self.name,
+            origin=self
         )
+
+    def apply_hit(self, hit_type):
+        if self.origin:
+            self.origin.apply_hit(hit_type)
+        else:
+            if self.shields > 0:
+                self.shields -= 1
+                print("Shields down to %s for %s!" % (self.shields, self.name))
+            else:
+                print("Shields depleted for %s!" % self.name)
+                self.ship.apply_hit(hit_type)

@@ -18,3 +18,7 @@ class Space:
             lambda x: x.faction != faction,
             Space.ships
         )
+
+    @classmethod
+    def remove_ship(cls, ship):
+        Space.ships.remove(ship)
