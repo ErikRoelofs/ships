@@ -25,7 +25,7 @@ class TargetZone:
 
     def is_valid_target(self, my_location: Location, hardpoint: WeaponPoint, target, range):
         debug = Debug()
-        # range check
+        # target is within range check
         target_line = get_target_line(my_location, hardpoint, target)
         debug.log("Targetline: %s" % target_line, debug.MATH)
 
@@ -44,7 +44,7 @@ class TargetZone:
             debug.log("Not intersecting any of the hit-lines!", debug.MATH)
             return False
 
-        # does not intersect the (extended) fire arcs
+        # does not intersect the (extended) fire arcs check
         for fire_arc_line in self.fire_arc_lines:
             if fire_arc_line.extended_by(range).from_location(my_location).intersects(target_line):
                 debug.log("Crossing one of our own fire arcs!", debug.MATH)

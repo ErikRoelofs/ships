@@ -1,6 +1,6 @@
 from logic.space.space import Space
 from logic.turn.turn import Turn
-from random import randint
+from random import randint, choice
 
 
 class FireControl:
@@ -35,7 +35,7 @@ class FireControl:
                 zone = solution[1]
                 potential_shots = zone.get_valid_targets(self.ship.location, targets, weapon.range())
                 if len(potential_shots) > 0:
-                    final_target = potential_shots[0]
+                    final_target = choice(potential_shots)
                     weapon.fire(self.ship.location, final_target[0], final_target[1])
                 self.fire_solutions.remove(solution)
 
