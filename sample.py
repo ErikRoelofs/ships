@@ -36,7 +36,7 @@ def main():
     turn = Turn(10)
 
     demoship1 = Demo(Location(Point(150, 450), -0.2), 1).getShip()
-    demoship2 = Demo(Location(Point(450, 250), 0.001), 2).getShip()
+    demoship2 = Demo(Location(Point(450, 250), -0.1), 2).getShip()
 
     movement_plan = MovementPlan([
         MovementSegment(40, 0.2, 2),

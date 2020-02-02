@@ -3,7 +3,7 @@ from logic.ship.image_data import ImageData
 from logic.ship.ship import Ship
 from logic.ship.stats import Stats, Engine
 from logic.ship.targetzone import TargetZone
-from logic.ship.weapon import Weapon, BeamLaser
+from logic.ship.weapon import Weapon, BeamLaser, TurboLaser
 from logic.ship_math.line import HitLine, FireArcLine
 from logic.ship_math.point import Point, AimingPoint, WeaponPoint
 
@@ -71,6 +71,7 @@ class Demo:
                     ],
                     [
                         BeamLaser(), BeamLaser(), BeamLaser(),
+                        TurboLaser(), TurboLaser(), TurboLaser(),
                     ]
                 ),
                 TargetZone(

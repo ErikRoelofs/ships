@@ -1,6 +1,6 @@
 from logic.space.space import Space
 from logic.turn.turn import Turn
-from random import randint, choice
+from random import randint, choice, shuffle
 
 
 class FireControl:
@@ -17,7 +17,7 @@ class FireControl:
             base_spread = turn.duration / (weapon_count + 1)
             next_timer = base_spread
             weapons = firezone.weapons.copy()
-            # shuffle the weapons
+            shuffle(weapons)
             while weapons:
                 self.fire_solutions.append((weapons.pop(), firezone, next_timer + (randint(-200, 200)/1000)))
                 next_timer += base_spread
