@@ -1,3 +1,5 @@
+import random
+
 from logic.ship.hitzone import Hitzone
 from logic.ship.image_data import ImageData
 from logic.ship.ship import Ship
@@ -118,7 +120,7 @@ class Demo:
                 ),
             ],
             faction,
-            ImageData('ships/demo/ship.png')
+            ImageData('ships/demo/ship'+str(random.randint(1, 7))+'.png')
         )
 
     def getShip(self):
