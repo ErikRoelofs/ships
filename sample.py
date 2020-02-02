@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 # import
-import os.path
 
 import pygame
 from pygame.locals import *
@@ -25,29 +24,8 @@ SCREENRECT = pygame.Rect(0, 0, 1200, 900)
 dirtyrects = []  # list of update_rects
 next_tick = 0  # used for timing
 
-class Img: pass  # container for images
-
-main_dir = os.path.split(os.path.abspath(__file__))[0]  # Program's directory
-
-
-# first, we define some utility functions
-
-def load_image(file, transparent):
-    "loads an image, prepares it for play"
-    file = os.path.join(main_dir, 'data', file)
-    try:
-        surface = pygame.image.load(file)
-    except pygame.error:
-        raise SystemExit('Could not load image "%s" %s' %
-                         (file, pygame.get_error()))
-    if transparent:
-        corner = surface.get_at((0, 0))
-        surface.set_colorkey(corner, RLEACCEL)
-    return surface.convert()
-
 
 def main():
-    "Run me for adrenaline"
     global dirtyrects
 
     # Initialize SDL components
@@ -84,12 +62,6 @@ def main():
         if not pause:
             turn.update(dt)
             turn.draw(screen)
-
-            demoship1.debug_draw(screen)
-            demoship2.debug_draw(screen)
-
-            #for fire_zone in demoship1.targetzones:
-            #    fire_zone.debug_draw_targeting_lines(screen, demoship1.location, demoship2.get_hittable_zones(), 400)
 
             pygame.display.update()
 

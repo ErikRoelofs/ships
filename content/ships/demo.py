@@ -1,4 +1,5 @@
 from logic.ship.hitzone import Hitzone
+from logic.ship.image_data import ImageData
 from logic.ship.ship import Ship
 from logic.ship.stats import Stats, Engine
 from logic.ship.targetzone import TargetZone
@@ -70,10 +71,6 @@ class Demo:
                     ],
                     [
                         BeamLaser(), BeamLaser(), BeamLaser(),
-                        BeamLaser(), BeamLaser(), BeamLaser(),
-                        BeamLaser(), BeamLaser(), BeamLaser(),
-                        BeamLaser(), BeamLaser(), BeamLaser(),
-                        BeamLaser(), BeamLaser(), BeamLaser(),
                     ]
                 ),
                 TargetZone(
@@ -119,7 +116,8 @@ class Demo:
                     ]
                 ),
             ],
-            faction
+            faction,
+            ImageData('ships/demo/ship.png')
         )
 
     def getShip(self):
