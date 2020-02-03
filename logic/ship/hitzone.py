@@ -8,7 +8,7 @@ from logic.ship_math.point import AimingPoint
 class Hitzone(Subsystem):
 
     def __init__(self, aiming_point: AimingPoint, hit_lines: [HitLine], shields: int, aux_shields: int, can_harden=False, name: str='', origin=None):
-        initial_state = State(on=True, aux=False, overload=False)
+        initial_state = State(on=False, aux=False, overload=False)
         Subsystem.__init__(self, initial_state, aux_shields>0, can_harden)
         self.aiming_point = aiming_point
         self.hit_lines = hit_lines
@@ -43,9 +43,9 @@ class Hitzone(Subsystem):
         if self.origin:
             self.origin.apply_hit(hit_type)
         else:
-            if self.shields > 0:
+            if self.state.on and self.shields > 0:
                 self.shields -= 1
                 Debug().log("Shields down to %s for %s!" % (self.shields, self.name), Debug.COMBAT)
             else:
-                Debug().log("Shields depleted for %s!" % self.name, Debug.COMBAT)
+                Debug().log("Shields depleted (or off) for %s!" % self.name, Debug.COMBAT)
                 self.ship.apply_hit(hit_type)
