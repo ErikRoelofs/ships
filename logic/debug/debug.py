@@ -1,5 +1,6 @@
 class Debug:
 
+    COMBAT = 2
     MATH = 1
 
     def __init__(self):

@@ -85,7 +85,7 @@ class Ship (Entity):
     def apply_hit(self, hit_type):
         if self.stats.bridge.current_hull > 1:
             self.stats.bridge.current_hull -= 1
-            print("Hull reduced to %s!" % self.stats.bridge.current_hull)
+            Debug().log("Hull reduced to %s!" % self.stats.bridge.current_hull, Debug.COMBAT)
         else:
-            print("Hull down!")
+            Debug().log("Hull down!", Debug.COMBAT)
             self.kill()

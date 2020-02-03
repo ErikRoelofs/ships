@@ -1,5 +1,6 @@
 import pygame
 
+from logic.debug.debug import Debug
 from logic.entity import Entity
 from logic.ship.hitzone import Hitzone
 from logic.ship.ship import Ship
@@ -36,7 +37,7 @@ class Weapon:
         return self.type.range
 
     def fire(self, ship: Ship, hardpoint: WeaponPoint, target_zone: Hitzone):
-        print("Boom!")
+        Debug().log("Boom!", Debug.COMBAT)
         target_zone.apply_hit(Hit.REGULAR)
         self.create_entity(ship, hardpoint, target_zone)
 

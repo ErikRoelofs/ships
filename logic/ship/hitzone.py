@@ -1,3 +1,4 @@
+from logic.debug.debug import Debug
 from logic.ship_math.line import HitLine
 from logic.ship_math.location import Location
 from logic.ship_math.point import AimingPoint
@@ -37,7 +38,7 @@ class Hitzone:
         else:
             if self.shields > 0:
                 self.shields -= 1
-                print("Shields down to %s for %s!" % (self.shields, self.name))
+                Debug().log("Shields down to %s for %s!" % (self.shields, self.name), Debug.COMBAT)
             else:
-                print("Shields depleted for %s!" % self.name)
+                Debug().log("Shields depleted for %s!" % self.name, Debug.COMBAT)
                 self.ship.apply_hit(hit_type)
