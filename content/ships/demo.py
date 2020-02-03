@@ -78,7 +78,8 @@ class Demo:
                     [
                         BeamLaser(), BeamLaser(), BeamLaser(),
                         TurboLaser(), TurboLaser(), TurboLaser(),
-                    ]
+                    ],
+                    []
                 ),
                 TargetZone(
                     [
@@ -92,7 +93,8 @@ class Demo:
                     ],
                     [
                         BeamLaser(), BeamLaser(), BeamLaser(), BeamLaser()
-                    ]
+                    ],
+                    []
                 ),
                 TargetZone(
                     [
@@ -106,7 +108,8 @@ class Demo:
                     ],
                     [
                         BeamLaser(), BeamLaser(), BeamLaser(), BeamLaser()
-                    ]
+                    ],
+                    []
                 ),
                 TargetZone(
                     [
@@ -120,7 +123,8 @@ class Demo:
                     ],
                     [
                         BeamLaser(), BeamLaser(), BeamLaser()
-                    ]
+                    ],
+                    []
                 ),
             ],
             faction,

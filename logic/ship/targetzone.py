@@ -1,5 +1,6 @@
 from logic.debug.debug import Debug
 from logic.ship.hitzone import Hitzone
+from logic.ship.stats import Subsystem, State
 from logic.ship_math.line import Line
 from logic.ship_math.location import Location
 from logic.ship_math.point import WeaponPoint
@@ -9,11 +10,14 @@ def get_target_line(my_location: Location, hardpoint: WeaponPoint, target: Hitzo
     return Line(hardpoint.from_location(my_location), target.aiming_point)
 
 
-class TargetZone:
-    def __init__(self, fire_arc_lines, hardpoints, weapons):
+class TargetZone(Subsystem):
+    def __init__(self, fire_arc_lines, hardpoints, weapons, aux_weapons):
+        initial_state = State(on=True, aux=False, overload=False)
+        Subsystem.__init__(self, initial_state, len(aux_weapons) > 0, True)
         self.fire_arc_lines = fire_arc_lines
         self.hardpoints = hardpoints
         self.weapons = weapons
+        self.aux_weapons = aux_weapons
         self.ship = None
 
     def link_to_ship(self, ship):
