@@ -3,7 +3,7 @@ import random
 from logic.ship.hitzone import Hitzone
 from logic.ship.image_data import ImageData
 from logic.ship.ship import Ship
-from logic.ship.stats import Stats, Engine, Bridge, Reactor
+from logic.ship.stats import Stats, Engine, Bridge, Reactor, Communications
 from logic.ship.targetzone import TargetZone
 from logic.ship.weapon import Weapon, BeamLaser, TurboLaser
 from logic.ship_math.line import HitLine, FireArcLine
@@ -25,7 +25,7 @@ class Demo:
 
         self.ship = Ship(
             location,
-            Stats(Reactor(6), Bridge(5, 3), 3, Engine(40, 0.2, 15, 0.1)),
+            Stats(Reactor(6), Bridge(5, 3), Communications(3), Engine(40, 0.2, 15, 0.1)),
             [
                 Hitzone(
                     AimingPoint(-center_x, aim_point_offset * top),

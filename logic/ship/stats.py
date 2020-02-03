@@ -105,15 +105,22 @@ class Reactor(Subsystem):
 
 
 class Engineering(Subsystem):
-    def __init__(self, command):
+    def __init__(self, repair_value: int, can_fix_hull=False, can_prevent_fires=False):
         initial_state = State(on=True, aux=False, overload=False)
-        Subsystem.__init__(self, initial_state, False, False, False, False)
-        self.command = command
+        Subsystem.__init__(self, initial_state, can_fix_hull, can_prevent_fires)
+        self.repair_value = repair_value
+
+
+class Communications(Subsystem):
+    def __init__(self, squadron_command, can_boost=False, can_enhance=False):
+        initial_state = State(on=True, aux=False, overload=False)
+        Subsystem.__init__(self, initial_state, can_boost, can_enhance)
+        self.squadron_command = squadron_command
 
 
 class Stats:
-    def __init__(self, reactor: Reactor, bridge: Bridge, hangar, engine: Engine):
+    def __init__(self, reactor: Reactor, bridge: Bridge, comms: Communications, engine: Engine):
         self.reactor = reactor
         self.bridge = bridge
-        self.hangar = hangar
+        self.comms = comms
         self.engines = engine
