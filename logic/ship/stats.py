@@ -87,10 +87,25 @@ class Engine(Subsystem):
             self.current_turn = -current_max_turn_speed
 
 
-class Stats:
-    def __init__(self, hull_strength, reactor, command, hangar, engine: Engine):
-        self.hull_strength = hull_strength
-        self.reactor = reactor
+class Bridge(Subsystem):
+    def __init__(self, hull, command):
+        initial_state = State(on=True, aux=False, overload=False)
+        Subsystem.__init__(self, initial_state, False, False, False, False)
+        self.max_hull = hull
         self.command = command
+        self.current_hull = hull
+
+
+class Engineering(Subsystem):
+    def __init__(self, command):
+        initial_state = State(on=True, aux=False, overload=False)
+        Subsystem.__init__(self, initial_state, False, False, False, False)
+        self.command = command
+
+
+class Stats:
+    def __init__(self, reactor, bridge: Bridge, hangar, engine: Engine):
+        self.reactor = reactor
+        self.bridge = bridge
         self.hangar = hangar
         self.engines = engine

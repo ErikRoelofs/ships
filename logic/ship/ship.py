@@ -32,7 +32,6 @@ class Ship (Entity):
         self.plan = None
         self.fire_control = FireControl(self)
         self.faction = faction
-        self.current_hull = self.stats.hull_strength
 
     def draw(self, surface):
         if Debug().is_active():
@@ -84,9 +83,9 @@ class Ship (Entity):
         self.fire_control.prepare(self.plan.turn)
 
     def apply_hit(self, hit_type):
-        if self.current_hull > 1:
-            self.current_hull -= 1
-            print("Hull reduced to %s!" % self.current_hull)
+        if self.stats.bridge.current_hull > 1:
+            self.stats.bridge.current_hull -= 1
+            print("Hull reduced to %s!" % self.stats.bridge.current_hull)
         else:
             print("Hull down!")
             self.kill()
