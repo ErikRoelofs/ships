@@ -96,6 +96,14 @@ class Bridge(Subsystem):
         self.current_hull = hull
 
 
+class Reactor(Subsystem):
+    def __init__(self, reactor_value, overload_value=0):
+        initial_state = State(on=True, aux=False, overload=False)
+        Subsystem.__init__(self, initial_state, False, overload_value>0, False, False)
+        self.reactor_value = reactor_value
+        self.overload_value = overload_value
+
+
 class Engineering(Subsystem):
     def __init__(self, command):
         initial_state = State(on=True, aux=False, overload=False)
@@ -104,7 +112,7 @@ class Engineering(Subsystem):
 
 
 class Stats:
-    def __init__(self, reactor, bridge: Bridge, hangar, engine: Engine):
+    def __init__(self, reactor: Reactor, bridge: Bridge, hangar, engine: Engine):
         self.reactor = reactor
         self.bridge = bridge
         self.hangar = hangar
