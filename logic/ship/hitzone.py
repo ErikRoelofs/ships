@@ -1,15 +1,20 @@
 from logic.debug.debug import Debug
+from logic.ship.stats import Subsystem, State
 from logic.ship_math.line import HitLine
 from logic.ship_math.location import Location
 from logic.ship_math.point import AimingPoint
 
 
-class Hitzone:
+class Hitzone(Subsystem):
 
-    def __init__(self, aiming_point: AimingPoint, hit_lines: [HitLine], shields: int, name: str, origin=None):
+    def __init__(self, aiming_point: AimingPoint, hit_lines: [HitLine], shields: int, aux_shields: int, can_harden=False, name: str='', origin=None):
+        initial_state = State(on=True, aux=False, overload=False)
+        Subsystem.__init__(self, initial_state, aux_shields>0, can_harden)
         self.aiming_point = aiming_point
         self.hit_lines = hit_lines
         self.shields = shields
+        self.aux_shields = aux_shields
+        self.can_harden = can_harden
         self.ship = None
         self.name = name
         self.origin = origin
@@ -28,7 +33,9 @@ class Hitzone:
             self.aiming_point.from_location(my_location),
             list(map(lambda x: x.from_location(my_location), self.hit_lines)),
             self.shields,
-            self.name,
+            self.aux_shields,
+            self.can_harden,
+            name=self.name,
             origin=self
         )
 
