@@ -13,10 +13,10 @@ class FireControl:
         self.fire_solutions = []
         self.timer = 0
         for firezone in self.ship.targetzones:
-            weapon_count = len(firezone.weapons)
+            weapons = firezone.get_weapons()
+            weapon_count = len(weapons)
             base_spread = turn.duration / (weapon_count + 1)
             next_timer = base_spread
-            weapons = firezone.weapons.copy()
             shuffle(weapons)
             while weapons:
                 self.fire_solutions.append((weapons.pop(), firezone, next_timer + (randint(-200, 200)/1000)))
@@ -38,22 +38,3 @@ class FireControl:
                     final_target = choice(potential_shots)
                     weapon.fire(self.ship, final_target[0], final_target[1])
                 self.fire_solutions.remove(solution)
-
-
-
-# when preparing:
-    # for each firezone
-        # randomize order of fire
-        # space out all weapons over the turn's duration
-            # roughly evenly over the turn
-            # small stagger to prevent all sides from firing at once
-
-# when updating
-    # increase timer
-    # fire all weapons whose timer has passed, then remove them from the waiting list
-        # randomly iterate all hardpoints
-            # scan for a target
-            # if targets found:
-                # pick the best target
-                # open fire
-                # done!

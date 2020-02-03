@@ -8,7 +8,7 @@ from logic.ship_math.point import AimingPoint
 class Hitzone(Subsystem):
 
     def __init__(self, aiming_point: AimingPoint, hit_lines: [HitLine], shields: int, aux_shields: int, can_harden=False, name: str='', origin=None):
-        initial_state = State(on=False, aux=False, overload=False)
+        initial_state = State(on=True, aux=False, overload=False)
         Subsystem.__init__(self, initial_state, aux_shields>0, can_harden)
         self.aiming_point = aiming_point
         self.hit_lines = hit_lines

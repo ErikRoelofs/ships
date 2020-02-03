@@ -24,6 +24,8 @@ class TargetZone(Subsystem):
         self.ship = ship
 
     def get_valid_targets(self, my_location, targets, range):
+        if not self.state.on:
+            return []
         valid_targets = []
         for point in self.hardpoints:
             for target in targets:
@@ -32,6 +34,9 @@ class TargetZone(Subsystem):
         return valid_targets
 
     def is_valid_target(self, my_location: Location, hardpoint: WeaponPoint, target, range):
+        if not self.state.on:
+            return False
+
         debug = Debug()
         # target is within range check
         target_line = get_target_line(my_location, hardpoint, target)
@@ -60,6 +65,15 @@ class TargetZone(Subsystem):
 
         debug.log("Valid shot!", debug.MATH)
         return True
+
+    def get_weapons(self):
+        if not self.state.on:
+            return []
+        weapons = self.weapons.copy()
+        if self.state.aux:
+            for aux in self.aux_weapons.copy():
+                weapons.append(aux)
+        return weapons
 
     def debug_draw(self, surface, location):
         for line in self.fire_arc_lines:

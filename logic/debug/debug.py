@@ -4,7 +4,7 @@ class Debug:
     MATH = 1
 
     def __init__(self):
-        self.active = False
+        self.active = True
 
     def log(self, msg, category):
         if self.active:
