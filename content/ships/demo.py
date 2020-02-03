@@ -33,7 +33,7 @@ class Demo:
                         HitLine(Point(left, top), Point(right, top))
                     ],
                     1,
-                    0,
+                    1,
                     name='up @ %s' % faction
                 ),
                 Hitzone(
@@ -42,7 +42,7 @@ class Demo:
                         HitLine(Point(right, top), Point(right, bottom))
                     ],
                     1,
-                    0,
+                    1,
                     name='right @ %s' % faction
                 ),
                 Hitzone(
@@ -51,7 +51,7 @@ class Demo:
                         HitLine(Point(right, bottom), Point(left, bottom))
                     ],
                     1,
-                    0,
+                    1,
                     name='down @ %s' % faction
                 ),
                 Hitzone(
@@ -60,7 +60,7 @@ class Demo:
                         HitLine(Point(left, bottom), Point(left, top))
                     ],
                     1,
-                    0,
+                    1,
                     name='left @ %s' % faction
                 ),
             ],
