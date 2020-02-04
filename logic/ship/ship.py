@@ -91,6 +91,9 @@ class Ship (Entity):
     def execute_plan(self):
         self.fire_control.prepare(self.plan.turn)
 
+    def end_turn(self):
+        pass
+
     def apply_hit(self, hit_type):
         bridge = self.subsystem.get_one_by_type(Bridge)
         if bridge.current_hull > 1:

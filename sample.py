@@ -49,10 +49,12 @@ def main():
 
     demoship1.set_plan(plan)
     demoship2.set_plan(Plan(turn))
-    demoship1.execute_plan()
 
     space_down = False
     pause = False
+
+    turn.start_next()
+
     while 1:
         pygame.event.pump()
         clock.tick(FRAMES_PER_SEC)
@@ -64,6 +66,11 @@ def main():
             turn.draw(screen)
 
             pygame.display.update()
+
+            if turn.done():
+                turn.end_turn()
+                turn.start_next()
+
 
         keystate = pygame.key.get_pressed()
         if keystate[K_ESCAPE] or pygame.event.peek(QUIT):

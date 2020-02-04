@@ -8,6 +8,7 @@ class Turn:
         self.duration = duration
         self.duration_left = duration
         self.entities = []
+        self.ended = True
         Turn.active_turn = self
 
     def register_entity(self, entity):
@@ -32,14 +33,28 @@ class Turn:
         for entity in self.entities:
             entity.draw(screen)
 
+    def done(self) -> bool:
+        return self.duration_left <= 0
+
     def busy(self) -> bool:
         return self.duration_left > 0
 
     def percentage_left(self) -> float:
         return self.duration_left / self.duration
 
+    def end_turn(self):
+        print("turn ending")
+        self.ended = True
+        for ship in Space.get_ships():
+            ship.end_turn()
+
     def start_next(self):
+        print("turn starting")
+        assert self.ended
         self.duration_left = self.duration
+        self.ended = False
+        for ship in Space.get_ships():
+            ship.execute_plan()
 
 
 def active_turn() -> Turn:

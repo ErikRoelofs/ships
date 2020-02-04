@@ -22,3 +22,7 @@ class Space:
     @classmethod
     def remove_ship(cls, ship):
         Space.ships.remove(ship)
+
+    @classmethod
+    def get_ships(cls):
+        return Space.ships
