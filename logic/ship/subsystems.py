@@ -35,6 +35,11 @@ class Subsystem:
         self.state.aux = False
         self.state.overload = False
 
+    def start_turn(self, ship):
+        pass
+
+    def end_turn(self, ship):
+        pass
 
 class Engine(Subsystem):
     def __init__(self, max_speed, turn_speed, thrust, turn_thrust, can_boost=False, can_evade=False, initial_state: State=None):
@@ -110,6 +115,36 @@ class Engineering(Subsystem):
         Subsystem.__init__(self, initial_state, can_fix_hull, can_prevent_fires)
         self.repair_value = repair_value
 
+    def end_turn(self, ship):
+        if self.state.on:
+            bridge = ship.subsystem.get_bridge()
+            print("repairing from %s / %s !" % ( bridge.current_hull, bridge.max_hull ))
+            bridge.current_hull += self.repair_value
+            bridge.current_hull = min(bridge.current_hull, bridge.max_hull)
+            print("repaired to %s / %s !" % ( bridge.current_hull, bridge.max_hull ))
+
+
+class ShieldControl(Subsystem):
+    def __init__(self, repair_value: int, aux_repair_value: int=0, can_overlap=False):
+        initial_state = State(on=True, aux=False, overload=False)
+        Subsystem.__init__(self, initial_state, aux_repair_value > 0, can_overlap)
+        self.repair_value = repair_value
+        self.aux_repair_value = aux_repair_value
+
+    def end_turn(self, ship):
+        restore_value = 0
+        if self.state.on:
+            restore_value = self.repair_value
+        if self.state.aux:
+            restore_value += self.aux_repair_value
+
+        while restore_value > 0:
+            # repair one at a time
+                # find the most damaged shield (by %)
+                # increase it by 1
+                # if nothing is damaged, return
+            restore_value -= 1
+
 
 class Communications(Subsystem):
     def __init__(self, squadron_command, can_boost=False, can_enhance=False):
@@ -125,10 +160,14 @@ class Subsystems:
     def add_system(self, system: Subsystem):
         self.subsystems.append(system)
 
+    def get_bridge(self):
+        return self.get_one_by_type(Bridge)
+
     def get_one_by_type(self, type):
         for system in self.subsystems:
             if isinstance(system, type):
                 return system
+        return None
 
     def get_all_by_type(self, type):
         return filter(lambda x: isinstance(x, type), self.subsystems)
@@ -146,3 +185,6 @@ class Subsystems:
         for system in self.subsystems:
             usage += system.power_use()
         return usage
+
+    def get_all(self):
+        return self.subsystems

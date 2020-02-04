@@ -3,7 +3,7 @@ import random
 from logic.ship.hitzone import Hitzone
 from logic.ship.image_data import ImageData
 from logic.ship.ship import Ship
-from logic.ship.subsystems import Subsystems, Engine, Bridge, Reactor, Communications
+from logic.ship.subsystems import Subsystems, Engine, Bridge, Reactor, Communications, Engineering
 from logic.ship.targetzone import TargetZone
 from logic.ship.weapon import BeamLaser, TurboLaser
 from logic.ship_math.line import HitLine, FireArcLine
@@ -28,7 +28,9 @@ class Demo:
             Subsystems(Reactor(6), Bridge(5, 3)),
             [
                 Communications(3),
-                Engine(40, 0.2, 15, 0.1)],
+                Engine(40, 0.2, 15, 0.1),
+                Engineering(5),
+            ],
             [
                 Hitzone(
                     AimingPoint(-center_x, aim_point_offset * top),
@@ -80,7 +82,6 @@ class Demo:
                     ],
                     [
                         BeamLaser(), BeamLaser(), BeamLaser(),
-                        TurboLaser(), TurboLaser(), TurboLaser(),
                     ],
                     [
                     ]

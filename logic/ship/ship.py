@@ -90,9 +90,12 @@ class Ship (Entity):
 
     def execute_plan(self):
         self.fire_control.prepare(self.plan.turn)
+        for system in self.subsystem.get_all():
+            system.start_turn(self)
 
     def end_turn(self):
-        pass
+        for system in self.subsystem.get_all():
+            system.end_turn(self)
 
     def apply_hit(self, hit_type):
         bridge = self.subsystem.get_one_by_type(Bridge)
