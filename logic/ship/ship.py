@@ -1,5 +1,4 @@
 import math
-
 import pygame
 
 from logic.debug.debug import Debug
@@ -7,18 +6,25 @@ from logic.entity import Entity
 from logic.ship.firecontrol import FireControl
 from logic.ship.hitzone import Hitzone
 from logic.ship.image_data import ImageData
-from logic.ship.stats import Stats
+from logic.ship.subsystems import Subsystems, Subsystem, Engine, Bridge
 from logic.ship.targetzone import TargetZone
 from logic.ship_math.location import Location
-from logic.ship_math.point import Point
 from logic.turn.plan import Plan
 
 
 class Ship (Entity):
-    def __init__(self, location: Location, stats: Stats, hitzones: [Hitzone], targetzones: [TargetZone], faction: int, images: ImageData):
+    def __init__(self, location: Location, subsystem: Subsystems, other_subsystems: [Subsystem], hitzones: [Hitzone], targetzones: [TargetZone], faction: int, images: ImageData):
         Entity.__init__(self)
         # base stats
-        self.stats = stats
+        self.subsystem = subsystem
+        for sub in other_subsystems:
+            self.subsystem.add_system(sub)
+
+        for hit in hitzones:
+            self.subsystem.add_system(hit)
+        for target in targetzones:
+            self.subsystem.add_system(target)
+
         self.hitzones = hitzones
         self.targetzones = targetzones
         self.images = images
@@ -32,6 +38,8 @@ class Ship (Entity):
         self.plan = None
         self.fire_control = FireControl(self)
         self.faction = faction
+
+        print("Using %s of %s power" % (self.subsystem.get_power_usage(), self.subsystem.get_power_available()))
 
     def draw(self, surface):
         if Debug().is_active():
@@ -65,10 +73,11 @@ class Ship (Entity):
     def update(self, dt):
         move_plan = self.plan.movement_plan
         move_plan.update(dt)
-        heading = self.stats.engines.get_heading_from_plan(move_plan, dt)
+        heading = self.subsystem.get_one_by_type(Engine).get_heading_from_plan(move_plan, dt)
         self.location.advance(heading[0] * dt)
         self.location.rotate(heading[1] * dt)
         self.fire_control.update(dt)
+
 
     def get_hittable_zones(self):
         return list(map(
@@ -83,9 +92,10 @@ class Ship (Entity):
         self.fire_control.prepare(self.plan.turn)
 
     def apply_hit(self, hit_type):
-        if self.stats.bridge.current_hull > 1:
-            self.stats.bridge.current_hull -= 1
-            Debug().log("Hull reduced to %s!" % self.stats.bridge.current_hull, Debug.COMBAT)
+        bridge = self.subsystem.get_one_by_type(Bridge)
+        if bridge.current_hull > 1:
+            bridge.current_hull -= 1
+            Debug().log("Hull reduced to %s!" % bridge.current_hull, Debug.COMBAT)
         else:
             Debug().log("Hull down!", Debug.COMBAT)
             self.kill()

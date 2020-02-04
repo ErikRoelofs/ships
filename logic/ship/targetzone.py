@@ -1,6 +1,6 @@
 from logic.debug.debug import Debug
 from logic.ship.hitzone import Hitzone
-from logic.ship.stats import Subsystem, State
+from logic.ship.subsystems import Subsystem, State
 from logic.ship_math.line import Line
 from logic.ship_math.location import Location
 from logic.ship_math.point import WeaponPoint

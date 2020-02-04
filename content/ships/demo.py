@@ -3,9 +3,9 @@ import random
 from logic.ship.hitzone import Hitzone
 from logic.ship.image_data import ImageData
 from logic.ship.ship import Ship
-from logic.ship.stats import Stats, Engine, Bridge, Reactor, Communications
+from logic.ship.subsystems import Subsystems, Engine, Bridge, Reactor, Communications
 from logic.ship.targetzone import TargetZone
-from logic.ship.weapon import Weapon, BeamLaser, TurboLaser
+from logic.ship.weapon import BeamLaser, TurboLaser
 from logic.ship_math.line import HitLine, FireArcLine
 from logic.ship_math.point import Point, AimingPoint, WeaponPoint
 
@@ -25,7 +25,10 @@ class Demo:
 
         self.ship = Ship(
             location,
-            Stats(Reactor(6), Bridge(5, 3), Communications(3), Engine(40, 0.2, 15, 0.1)),
+            Subsystems(Reactor(6), Bridge(5, 3)),
+            [
+                Communications(3),
+                Engine(40, 0.2, 15, 0.1)],
             [
                 Hitzone(
                     AimingPoint(-center_x, aim_point_offset * top),
@@ -129,7 +132,7 @@ class Demo:
                 ),
             ],
             faction,
-            ImageData('ships/demo/ship'+str(random.randint(1, 7))+'.png')
+            ImageData('ships/demo/ship'+str(random.randint(1, 7))+'.png'),
         )
 
     def getShip(self):

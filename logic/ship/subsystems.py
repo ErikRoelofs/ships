@@ -21,11 +21,11 @@ class Subsystem:
             return 0
         use = 0
         if self.state.on:
-            use+=1
+            use += 1
         if self.state.aux:
-            use+=1
+            use += 1
         if self.state.overload:
-            use+=1
+            use += 1
         return use
 
     def power_down(self):
@@ -118,9 +118,31 @@ class Communications(Subsystem):
         self.squadron_command = squadron_command
 
 
-class Stats:
-    def __init__(self, reactor: Reactor, bridge: Bridge, comms: Communications, engine: Engine):
-        self.reactor = reactor
-        self.bridge = bridge
-        self.comms = comms
-        self.engines = engine
+class Subsystems:
+    def __init__(self, reactor: Reactor, bridge: Bridge):
+        self.subsystems = [reactor, bridge]
+
+    def add_system(self, system: Subsystem):
+        self.subsystems.append(system)
+
+    def get_one_by_type(self, type):
+        for system in self.subsystems:
+            if isinstance(system, type):
+                return system
+
+    def get_all_by_type(self, type):
+        return filter(lambda x: isinstance(x, type), self.subsystems)
+
+    def get_power_available(self):
+        power_available = 0
+        for reactor in self.get_all_by_type(Reactor):
+            power_available += reactor.reactor_value
+            if reactor.state.overload:
+                power_available += reactor.overload_value
+        return power_available
+
+    def get_power_usage(self):
+        usage = 0
+        for system in self.subsystems:
+            usage += system.power_use()
+        return usage
