@@ -1,4 +1,5 @@
 from logic.debug.debug import Debug
+from logic.ship.hit import Hit
 from logic.ship.subsystems import Subsystem, State
 from logic.ship_math.line import HitLine
 from logic.ship_math.location import Location
@@ -43,6 +44,13 @@ class Hitzone(Subsystem):
         if self.origin:
             self.origin.apply_hit(hit_type)
         else:
+            if hit_type == Hit.MISS:
+                Debug().log("It's a miss for %s!" % self.name, Debug.COMBAT)
+                return
+            if hit_type == Hit.PIERCING:
+                Debug().log("It's a piercing hit for %s!" % self.name, Debug.COMBAT)
+                self.ship.apply_hit(hit_type)
+                return
             if self.state.aux and self.aux_shields > 0:
                 self.aux_shields -= 1
                 Debug().log("Aux shields down to %s for %s!" % (self.aux_shields, self.name), Debug.COMBAT)

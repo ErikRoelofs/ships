@@ -1,18 +1,14 @@
+import random
+
 import pygame
 
 from logic.debug.debug import Debug
 from logic.entity import Entity
+from logic.ship.hit import Hit
 from logic.ship.hitzone import Hitzone
 from logic.ship.ship import Ship
 from logic.ship_math.point import WeaponPoint, Point
 from logic.turn.turn import active_turn
-
-
-class Hit:
-    MISS = 0
-    WEAK = 1
-    REGULAR = 2
-    PIERCING = 3
 
 
 class WeaponType:
@@ -38,11 +34,18 @@ class Weapon:
 
     def fire(self, ship: Ship, hardpoint: WeaponPoint, target_zone: Hitzone):
         Debug().log("Boom!", Debug.COMBAT)
-        target_zone.apply_hit(Hit.REGULAR)
+        target_zone.apply_hit(self.roll_hit_type())
         self.create_entity(ship, hardpoint, target_zone)
 
     def create_entity(self, ship, hardpoint, target_zone):
         pass
+
+    def roll_hit_type(self):
+        rand = random.randint(0,9)
+        return self.hit_table()[rand]
+
+    def hit_table(self):
+        return [Hit.REGULAR, Hit.REGULAR, Hit.REGULAR, Hit.REGULAR, Hit.REGULAR, Hit.REGULAR, Hit.REGULAR, Hit.REGULAR, Hit.REGULAR, Hit.REGULAR]
 
 
 class BeamLaser(Weapon):
@@ -52,6 +55,8 @@ class BeamLaser(Weapon):
     def create_entity(self, ship: Ship, hardpoint: WeaponPoint, target_zone: Hitzone):
         active_turn().register_entity(BeamEffect(ship, hardpoint, target_zone.aiming_point))
 
+    def hit_table(self):
+        return [Hit.MISS, Hit.MISS, Hit.MISS, Hit.WEAK, Hit.WEAK, Hit.WEAK, Hit.REGULAR, Hit.REGULAR, Hit.REGULAR, Hit.PIERCING]
 
 class TurboLaser(Weapon):
     def __init__(self):
@@ -60,6 +65,8 @@ class TurboLaser(Weapon):
     def create_entity(self, ship: Ship, hardpoint: WeaponPoint, target_zone: Hitzone):
         active_turn().register_entity(TurboBeamEffect(ship, hardpoint, target_zone.aiming_point))
 
+    def hit_table(self):
+        return [Hit.MISS, Hit.MISS, Hit.MISS, Hit.WEAK, Hit.WEAK, Hit.WEAK, Hit.REGULAR, Hit.REGULAR, Hit.REGULAR, Hit.PIERCING]
 
 class BeamEffect(Entity):
     def __init__(self, ship: Ship, hardpoint: WeaponPoint, to_location: Point):
