@@ -92,6 +92,7 @@ class Ship (Entity):
         self.fire_control.prepare(self.plan.turn)
         for system in self.subsystem.get_all():
             system.start_turn(self)
+        self.subsystem.get_reactor().set_power_use(self.subsystem.get_power_usage())
 
     def end_turn(self):
         for system in self.subsystem.get_all():

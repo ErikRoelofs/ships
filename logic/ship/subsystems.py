@@ -99,6 +99,12 @@ class Engine(Subsystem):
         if self.current_turn < -current_max_turn_speed:
             self.current_turn = -current_max_turn_speed
 
+    def draw_status(self, surface: Surface):
+        text = Fonts.shields.render(str(int(self.current_speed)) + '/' + str(self.max_speed), True, (255, 255, 255))
+        text2 = Fonts.shields.render(str(int(self.current_turn * 100)) + '/' + str(int(self.max_turn_speed * 100)), True, (255, 255, 255))
+        surface.blit(text, (0, 30))
+        surface.blit(text2, (0, 10))
+
 
 class Bridge(Subsystem):
     def __init__(self, hull: int, command: int):
@@ -121,7 +127,17 @@ class Reactor(Subsystem):
         Subsystem.__init__(self, "Reactor", initial_state, False, overload_value>0, False, False)
         self.reactor_value = reactor_value
         self.overload_value = overload_value
+        self.reactor_used = 0
 
+    def set_power_use(self, use):
+        self.reactor_used = use
+
+    def draw_status(self, surface: Surface):
+        text = Fonts.shields.render(str(self.reactor_used) + '/' + str(self.reactor_value), True, (0, 255, 255))
+        surface.blit(text, (0, 30))
+        if self.overload_value > 0:
+            text2 = Fonts.shields.render(str(self.overload_value), True, (0, 255, 255))
+            surface.blit(text2, (0, 10))
 
 class Engineering(Subsystem):
     def __init__(self, repair_value: int, can_fix_hull=False, can_prevent_fires=False):
@@ -132,11 +148,12 @@ class Engineering(Subsystem):
     def end_turn(self, ship):
         if self.state.on:
             bridge = ship.subsystem.get_bridge()
-            print("repairing from %s / %s !" % ( bridge.current_hull, bridge.max_hull ))
             bridge.current_hull += self.repair_value
             bridge.current_hull = min(bridge.current_hull, bridge.max_hull)
-            print("repaired to %s / %s !" % ( bridge.current_hull, bridge.max_hull ))
 
+    def draw_status(self, surface: Surface):
+        text = Fonts.shields.render(str(self.repair_value), True, (255, 255, 255))
+        surface.blit(text, (0, 30))
 
 class ShieldControl(Subsystem):
     def __init__(self, repair_value: int, aux_repair_value: int=0, can_overlap=False):
@@ -176,6 +193,9 @@ class Subsystems:
 
     def get_bridge(self):
         return self.get_one_by_type(Bridge)
+
+    def get_reactor(self):
+        return self.get_one_by_type(Reactor)
 
     def get_one_by_type(self, type):
         for system in self.subsystems:

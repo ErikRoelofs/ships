@@ -27,7 +27,6 @@ class Demo:
             location,
             Subsystems(Reactor(6), Bridge(5, 3)),
             [
-                Communications(3),
                 Engine(40, 0.2, 15, 0.1),
                 Engineering(5),
             ],
