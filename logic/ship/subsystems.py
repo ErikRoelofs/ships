@@ -1,4 +1,7 @@
+from pygame.surface import Surface
+
 from logic.turn.movement import MovementPlan
+from visuals.fonts import Fonts
 
 
 class State:
@@ -98,12 +101,18 @@ class Engine(Subsystem):
 
 
 class Bridge(Subsystem):
-    def __init__(self, hull, command):
+    def __init__(self, hull: int, command: int):
         initial_state = State(on=True, aux=False, overload=False)
         Subsystem.__init__(self, "Bridge", initial_state, False, False, False, False)
         self.max_hull = hull
         self.command = command
         self.current_hull = hull
+
+    def draw_status(self, surface: Surface):
+        text = Fonts.shields.render(str(self.current_hull) + '/' + str(self.max_hull), True, (255, 255, 255))
+        text2 = Fonts.shields.render(str(self.command), True, (0, 255, 0))
+        surface.blit(text, (0, 30))
+        surface.blit(text2, (0, 10))
 
 
 class Reactor(Subsystem):

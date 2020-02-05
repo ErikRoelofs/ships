@@ -16,7 +16,9 @@ class Hitzone(Subsystem):
         Subsystem.__init__(self, "Shields", initial_state, aux_shields > 0, can_harden)
         self.aiming_point = aiming_point
         self.hit_lines = hit_lines
+        self.max_shields = shields
         self.shields = shields
+        self.max_aux_shields = aux_shields
         self.aux_shields = aux_shields
         self.can_harden = can_harden
         self.ship = None
@@ -65,7 +67,7 @@ class Hitzone(Subsystem):
                 self.ship.apply_hit(hit_type)
 
     def draw_status(self, surface: Surface):
-        text = Fonts.shields.render(str(self.shields), True, (0, 0, 255))
-        text2 = Fonts.shields.render(str(self.aux_shields), True, (0, 0, 255))
+        text = Fonts.shields.render(str(self.shields) + '/' + str(self.max_shields), True, (0, 0, 255))
+        text2 = Fonts.shields.render(str(self.aux_shields) + '/' + str(self.max_aux_shields), True, (0, 0, 255))
         surface.blit(text, (0, 30))
-        surface.blit(text2, (0, 15))
+        surface.blit(text2, (0, 10))
