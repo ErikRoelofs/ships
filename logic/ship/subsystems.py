@@ -9,7 +9,7 @@ class State:
 
 
 class Subsystem:
-    def __init__(self, initial_state: State, has_aux, has_overload, uses_energy = True, can_power_down = True):
+    def __init__(self, initial_state: State, has_aux, has_overload, uses_energy=True, can_power_down=True):
         self.can_power_down = can_power_down
         self.uses_energy = uses_energy
         self.has_overload = has_overload

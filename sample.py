@@ -33,6 +33,9 @@ def main():
     screen = pygame.display.set_mode(SCREENRECT.size, 0)
     clock = pygame.time.Clock()
 
+    from logic.ship.image_data import ImageData
+    print("loading the images")
+
     turn = Turn(10)
 
     demoship1 = Demo(Location(Point(150, 450), -0.2), 1).getShip()
@@ -53,6 +56,9 @@ def main():
     space_down = False
     pause = False
 
+    from visuals.controlpane import ControlPane  # import after init
+    panel = ControlPane(demoship1)
+
     turn.start_next()
 
     while 1:
@@ -71,6 +77,7 @@ def main():
                 turn.end_turn()
                 turn.start_next()
 
+            panel.draw(screen)
 
         keystate = pygame.key.get_pressed()
         if keystate[K_ESCAPE] or pygame.event.peek(QUIT):

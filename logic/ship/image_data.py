@@ -19,6 +19,6 @@ def load_image(file, transparent):
 
 
 class ImageData:
-    def __init__(self, imagename):
-        self.image = load_image(imagename, True)
+    def __init__(self, imagename, transparent=True):
+        self.image = load_image(imagename, transparent)
         self.rect = self.image.get_rect()
