@@ -38,8 +38,8 @@ class Demo:
                         HitLine(Point(left, top), Point(right, top))
                     ],
                     1,
-                    1,
-                    name='up @ %s' % faction
+                    0,
+                    debug_name='up @ %s' % faction
                 ),
                 Hitzone(
                     AimingPoint(aim_point_offset * right, 0),
@@ -48,7 +48,7 @@ class Demo:
                     ],
                     1,
                     1,
-                    name='right @ %s' % faction
+                    debug_name='right @ %s' % faction
                 ),
                 Hitzone(
                     AimingPoint(-center_x, aim_point_offset * bottom),
@@ -56,8 +56,8 @@ class Demo:
                         HitLine(Point(right, bottom), Point(left, bottom))
                     ],
                     1,
-                    1,
-                    name='down @ %s' % faction
+                    0,
+                    debug_name='down @ %s' % faction
                 ),
                 Hitzone(
                     AimingPoint(aim_point_offset * left, 0),
@@ -65,8 +65,8 @@ class Demo:
                         HitLine(Point(left, bottom), Point(left, top))
                     ],
                     1,
-                    1,
-                    name='left @ %s' % faction
+                    0,
+                    debug_name='left @ %s' % faction
                 ),
             ],
             [
@@ -99,7 +99,9 @@ class Demo:
                     [
                         BeamLaser(), BeamLaser(), BeamLaser(), BeamLaser()
                     ],
-                    []
+                    [
+                        BeamLaser(),
+                    ]
                 ),
                 TargetZone(
                     [

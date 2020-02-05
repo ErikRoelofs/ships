@@ -9,12 +9,13 @@ class State:
 
 
 class Subsystem:
-    def __init__(self, initial_state: State, has_aux, has_overload, uses_energy=True, can_power_down=True):
+    def __init__(self, name: str, initial_state: State, has_aux, has_overload, uses_energy=True, can_power_down=True):
         self.can_power_down = can_power_down
         self.uses_energy = uses_energy
         self.has_overload = has_overload
         self.has_aux = has_aux
         self.state = initial_state
+        self.name = name
 
     def power_use(self):
         if not self.uses_energy:
@@ -41,11 +42,12 @@ class Subsystem:
     def end_turn(self, ship):
         pass
 
+
 class Engine(Subsystem):
     def __init__(self, max_speed, turn_speed, thrust, turn_thrust, can_boost=False, can_evade=False, initial_state: State=None):
         if not initial_state:
             initial_state = State(on=True, aux=False, overload=False)
-        Subsystem.__init__(self, initial_state, can_boost, can_evade)
+        Subsystem.__init__(self, "Engine", initial_state, can_boost, can_evade)
         self.max_speed = max_speed
         self.max_turn_speed = turn_speed
         self.turn_thrust = turn_thrust
@@ -95,7 +97,7 @@ class Engine(Subsystem):
 class Bridge(Subsystem):
     def __init__(self, hull, command):
         initial_state = State(on=True, aux=False, overload=False)
-        Subsystem.__init__(self, initial_state, False, False, False, False)
+        Subsystem.__init__(self, "Bridge", initial_state, False, False, False, False)
         self.max_hull = hull
         self.command = command
         self.current_hull = hull
@@ -104,7 +106,7 @@ class Bridge(Subsystem):
 class Reactor(Subsystem):
     def __init__(self, reactor_value, overload_value=0):
         initial_state = State(on=True, aux=False, overload=False)
-        Subsystem.__init__(self, initial_state, False, overload_value>0, False, False)
+        Subsystem.__init__(self, "Reactor", initial_state, False, overload_value>0, False, False)
         self.reactor_value = reactor_value
         self.overload_value = overload_value
 
@@ -112,7 +114,7 @@ class Reactor(Subsystem):
 class Engineering(Subsystem):
     def __init__(self, repair_value: int, can_fix_hull=False, can_prevent_fires=False):
         initial_state = State(on=True, aux=False, overload=False)
-        Subsystem.__init__(self, initial_state, can_fix_hull, can_prevent_fires)
+        Subsystem.__init__(self, "Engineering", initial_state, can_fix_hull, can_prevent_fires)
         self.repair_value = repair_value
 
     def end_turn(self, ship):
@@ -127,7 +129,7 @@ class Engineering(Subsystem):
 class ShieldControl(Subsystem):
     def __init__(self, repair_value: int, aux_repair_value: int=0, can_overlap=False):
         initial_state = State(on=True, aux=False, overload=False)
-        Subsystem.__init__(self, initial_state, aux_repair_value > 0, can_overlap)
+        Subsystem.__init__(self, "Shield ctrl", initial_state, aux_repair_value > 0, can_overlap)
         self.repair_value = repair_value
         self.aux_repair_value = aux_repair_value
 
@@ -149,7 +151,7 @@ class ShieldControl(Subsystem):
 class Communications(Subsystem):
     def __init__(self, squadron_command, can_boost=False, can_enhance=False):
         initial_state = State(on=True, aux=False, overload=False)
-        Subsystem.__init__(self, initial_state, can_boost, can_enhance)
+        Subsystem.__init__(self, "Comms", initial_state, can_boost, can_enhance)
         self.squadron_command = squadron_command
 
 

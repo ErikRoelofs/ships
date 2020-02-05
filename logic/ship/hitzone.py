@@ -8,16 +8,16 @@ from logic.ship_math.point import AimingPoint
 
 class Hitzone(Subsystem):
 
-    def __init__(self, aiming_point: AimingPoint, hit_lines: [HitLine], shields: int, aux_shields: int, can_harden=False, name: str='', origin=None):
+    def __init__(self, aiming_point: AimingPoint, hit_lines: [HitLine], shields: int, aux_shields: int, can_harden=False, debug_name: str='', origin=None):
         initial_state = State(on=True, aux=False, overload=False)
-        Subsystem.__init__(self, initial_state, aux_shields > 0, can_harden)
+        Subsystem.__init__(self, "Shields", initial_state, aux_shields > 0, can_harden)
         self.aiming_point = aiming_point
         self.hit_lines = hit_lines
         self.shields = shields
         self.aux_shields = aux_shields
         self.can_harden = can_harden
         self.ship = None
-        self.name = name
+        self.debug_name = debug_name
         self.origin = origin
 
     def link_to_ship(self, ship):
@@ -36,7 +36,7 @@ class Hitzone(Subsystem):
             self.shields,
             self.aux_shields,
             self.can_harden,
-            name=self.name,
+            debug_name=self.name,
             origin=self
         )
 
@@ -45,18 +45,18 @@ class Hitzone(Subsystem):
             self.origin.apply_hit(hit_type)
         else:
             if hit_type == Hit.MISS:
-                Debug().log("It's a miss for %s!" % self.name, Debug.COMBAT)
+                Debug().log("It's a miss for %s!" % self.debug_name, Debug.COMBAT)
                 return
             if hit_type == Hit.PIERCING:
-                Debug().log("It's a piercing hit for %s!" % self.name, Debug.COMBAT)
+                Debug().log("It's a piercing hit for %s!" % self.debug_name, Debug.COMBAT)
                 self.ship.apply_hit(hit_type)
                 return
             if self.state.aux and self.aux_shields > 0:
                 self.aux_shields -= 1
-                Debug().log("Aux shields down to %s for %s!" % (self.aux_shields, self.name), Debug.COMBAT)
+                Debug().log("Aux shields down to %s for %s!" % (self.aux_shields, self.debug_name), Debug.COMBAT)
             elif self.state.on and self.shields > 0:
                 self.shields -= 1
-                Debug().log("Shields down to %s for %s!" % (self.shields, self.name), Debug.COMBAT)
+                Debug().log("Shields down to %s for %s!" % (self.shields, self.debug_name), Debug.COMBAT)
             else:
-                Debug().log("Shields depleted (or off) for %s!" % self.name, Debug.COMBAT)
+                Debug().log("Shields depleted (or off) for %s!" % self.debug_name, Debug.COMBAT)
                 self.ship.apply_hit(hit_type)
