@@ -5,6 +5,7 @@ from logic.ship.image_data import ImageData
 from logic.ship.ship import Ship
 from logic.ship.subsystems import Subsystem
 from logic.ship_math.point import Point
+from visuals.fonts import Fonts
 
 
 class ControlPane (Entity):
@@ -36,7 +37,6 @@ class SubsystemRenderer:
         'overload': ImageData('ui/subsystems/overload.png', transparent=False),
         'both': ImageData('ui/subsystems/both.png', transparent=False),
     }
-    font = pygame.font.SysFont('Comic Sans MS', 10)
     light_on = pygame.Surface((20, 30))
     light_on.fill((0, 255, 0))
     light_off = pygame.Surface((20, 30))
@@ -54,7 +54,7 @@ class SubsystemRenderer:
         else:
             self.image = SubsystemRenderer.images['neither']
 
-        self.label = SubsystemRenderer.font.render(system.name, True, (255, 255, 255))
+        self.label = Fonts.control_pane.render(system.name, True, (255, 255, 255))
 
     def draw(self, surface, offset: Point):
         # main pane
@@ -84,3 +84,9 @@ class SubsystemRenderer:
                 surface.blit(SubsystemRenderer.light_on, overload_position)
             else:
                 surface.blit(SubsystemRenderer.light_off, overload_position)
+
+        # status display
+        status_surface = pygame.Surface((50, 50))
+        status_surface.fill((195, 195, 195))
+        self.system.draw_status(status_surface)
+        surface.blit(status_surface, (offset.x - 58, offset.y - 15))

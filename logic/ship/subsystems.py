@@ -42,6 +42,9 @@ class Subsystem:
     def end_turn(self, ship):
         pass
 
+    def draw_status(self, surface):
+        pass
+
 
 class Engine(Subsystem):
     def __init__(self, max_speed, turn_speed, thrust, turn_thrust, can_boost=False, can_evade=False, initial_state: State=None):

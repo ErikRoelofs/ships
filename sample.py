@@ -5,6 +5,8 @@
 import pygame
 from pygame.locals import *
 
+pygame.init()
+
 from content.ships.demo import Demo
 from logic.ship_math.location import Location
 from logic.ship_math.point import Point
@@ -24,12 +26,10 @@ SCREENRECT = pygame.Rect(0, 0, 1200, 900)
 dirtyrects = []  # list of update_rects
 next_tick = 0  # used for timing
 
-
 def main():
     global dirtyrects
 
     # Initialize SDL components
-    pygame.init()
     screen = pygame.display.set_mode(SCREENRECT.size, 0)
     clock = pygame.time.Clock()
 

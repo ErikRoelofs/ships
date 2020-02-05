@@ -1,9 +1,12 @@
+from pygame.surface import Surface
+
 from logic.debug.debug import Debug
 from logic.ship.hit import Hit
 from logic.ship.subsystems import Subsystem, State
 from logic.ship_math.line import HitLine
 from logic.ship_math.location import Location
 from logic.ship_math.point import AimingPoint
+from visuals.fonts import Fonts
 
 
 class Hitzone(Subsystem):
@@ -60,3 +63,9 @@ class Hitzone(Subsystem):
             else:
                 Debug().log("Shields depleted (or off) for %s!" % self.debug_name, Debug.COMBAT)
                 self.ship.apply_hit(hit_type)
+
+    def draw_status(self, surface: Surface):
+        text = Fonts.shields.render(str(self.shields), True, (0, 0, 255))
+        text2 = Fonts.shields.render(str(self.aux_shields), True, (0, 0, 255))
+        surface.blit(text, (0, 30))
+        surface.blit(text2, (0, 15))
