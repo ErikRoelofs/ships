@@ -5,28 +5,23 @@ from logic.ship.image_data import ImageData
 from logic.ship.ship import Ship
 from logic.ship.subsystems import Subsystem
 from logic.ship_math.point import Point
+from visuals.controllayout import ControlLayout
 from visuals.fonts import Fonts
 
 
 class ControlPane (Entity):
-    def __init__(self, ship: Ship):
+    def __init__(self, ship: Ship, layout: ControlLayout):
         Entity.__init__(self)
         self.renderers = []
-        for system in ship.subsystem.get_all():
-            self.renderers.append(SubsystemRenderer(system))
+        for system in layout.controls:
+            self.renderers.append((system[0], system[1], SubsystemRenderer(system[2])))
 
     def update(self, dt):
         pass
 
     def draw(self, screen):
-        i = 0
-        j = 0
         for renderer in self.renderers:
-            renderer.draw(screen, Point(950 + j * 150, 50 + 100 * i))
-            i += 1
-            if i > 8:
-                j += 1
-                i = 0
+            renderer[2].draw(screen, Point(800 + renderer[0] * 150, 50 + 100 * renderer[1]))
         pass
 
 class SubsystemRenderer:

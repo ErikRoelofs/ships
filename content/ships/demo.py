@@ -3,14 +3,14 @@ import random
 from logic.ship.hitzone import Hitzone
 from logic.ship.image_data import ImageData
 from logic.ship.ship import Ship
-from logic.ship.subsystems import Subsystems, Engine, Bridge, Reactor, Communications, Engineering
+from logic.ship.subsystems import Subsystems, Engine, Bridge, Reactor, Engineering
 from logic.ship.targetzone import TargetZone
 from logic.ship.weapon import BeamLaser, TurboLaser
 from logic.ship_math.line import HitLine, FireArcLine
 from logic.ship_math.point import Point, AimingPoint, WeaponPoint
 
 
-class Demo:
+class Demo(Ship):
     def __init__(self, location, faction):
 
         height = 60
@@ -23,7 +23,8 @@ class Demo:
         right = (0.5 * width) - center_x
         aim_point_offset = 0.85
 
-        self.ship = Ship(
+        Ship.__init__(
+            self,
             location,
             Subsystems(Reactor(6), Bridge(5, 3)),
             [
@@ -45,7 +46,7 @@ class Demo:
                     [
                         HitLine(Point(right, top), Point(right, bottom))
                     ],
-                    1,
+                    2,
                     1,
                     debug_name='right @ %s' % faction
                 ),
@@ -55,7 +56,7 @@ class Demo:
                         HitLine(Point(right, bottom), Point(left, bottom))
                     ],
                     1,
-                    0,
+                    1,
                     debug_name='down @ %s' % faction
                 ),
                 Hitzone(
@@ -63,13 +64,13 @@ class Demo:
                     [
                         HitLine(Point(left, bottom), Point(left, top))
                     ],
-                    1,
+                    2,
                     0,
                     debug_name='left @ %s' % faction
                 ),
             ],
             [
-                TargetZone(
+                TargetZone(  # up
                     [
                         FireArcLine(Point(-center_x, -center_y), Point(left, top)),
                         FireArcLine(Point(-center_x, -center_y), Point(right, top)),
@@ -86,7 +87,7 @@ class Demo:
                     [
                     ]
                 ),
-                TargetZone(
+                TargetZone(  # right
                     [
                         FireArcLine(Point(-center_x, -center_y), Point(right, top)),
                         FireArcLine(Point(-center_x, -center_y), Point(right, bottom)),
@@ -103,7 +104,7 @@ class Demo:
                         BeamLaser(),
                     ]
                 ),
-                TargetZone(
+                TargetZone(  # down
                     [
                         FireArcLine(Point(-center_x, -center_y), Point(right, bottom)),
                         FireArcLine(Point(-center_x, -center_y), Point(left, bottom)),
@@ -118,7 +119,7 @@ class Demo:
                     ],
                     []
                 ),
-                TargetZone(
+                TargetZone(  # left
                     [
                         FireArcLine(Point(-center_x, -center_y), Point(left, top)),
                         FireArcLine(Point(-center_x, -center_y), Point(left, bottom)),
@@ -135,8 +136,5 @@ class Demo:
                 ),
             ],
             faction,
-            ImageData('ships/demo/ship'+str(random.randint(1, 7))+'.png'),
+            ImageData('ships/demo/ship'+str(random.randint(1, 7))+'.png')
         )
-
-    def getShip(self):
-        return self.ship

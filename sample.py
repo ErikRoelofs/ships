@@ -33,13 +33,12 @@ def main():
     screen = pygame.display.set_mode(SCREENRECT.size, 0)
     clock = pygame.time.Clock()
 
-    from logic.ship.image_data import ImageData
     print("loading the images")
 
     turn = Turn(10)
 
-    demoship1 = Demo(Location(Point(150, 450), -0.2), 1).getShip()
-    demoship2 = Demo(Location(Point(450, 250), -0.1), 2).getShip()
+    demoship1 = Demo(Location(Point(150, 450), -0.2), 1)
+    demoship2 = Demo(Location(Point(450, 250), -0.1), 2)
 
     movement_plan = MovementPlan([
         MovementSegment(40, 0.2, 2),
@@ -57,7 +56,9 @@ def main():
     pause = False
 
     from visuals.controlpane import ControlPane  # import after init
-    panel = ControlPane(demoship1)
+    from visuals.controllayout import layout_from_ship
+    layout = layout_from_ship(demoship1)
+    panel = ControlPane(demoship1, layout)
 
     turn.start_next()
 
