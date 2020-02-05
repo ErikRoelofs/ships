@@ -81,6 +81,7 @@ class Demo:
                     ],
                     [
                         BeamLaser(), BeamLaser(), BeamLaser(),
+                        TurboLaser(), TurboLaser(), TurboLaser(),
                     ],
                     [
                     ]

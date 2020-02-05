@@ -47,6 +47,9 @@ class Weapon:
     def hit_table(self):
         return [Hit.REGULAR, Hit.REGULAR, Hit.REGULAR, Hit.REGULAR, Hit.REGULAR, Hit.REGULAR, Hit.REGULAR, Hit.REGULAR, Hit.REGULAR, Hit.REGULAR]
 
+    def color(self):
+        return (0,0,0)
+
 
 class BeamLaser(Weapon):
     def __init__(self):
@@ -58,6 +61,10 @@ class BeamLaser(Weapon):
     def hit_table(self):
         return [Hit.MISS, Hit.MISS, Hit.MISS, Hit.WEAK, Hit.WEAK, Hit.WEAK, Hit.REGULAR, Hit.REGULAR, Hit.REGULAR, Hit.PIERCING]
 
+    def color(self):
+        return (0,0,255)
+
+
 class TurboLaser(Weapon):
     def __init__(self):
         Weapon.__init__(self, WeaponType.turbo_laser())
@@ -67,6 +74,10 @@ class TurboLaser(Weapon):
 
     def hit_table(self):
         return [Hit.MISS, Hit.MISS, Hit.MISS, Hit.WEAK, Hit.WEAK, Hit.WEAK, Hit.REGULAR, Hit.REGULAR, Hit.REGULAR, Hit.PIERCING]
+
+    def color(self):
+        return (255,0,0)
+
 
 class BeamEffect(Entity):
     def __init__(self, ship: Ship, hardpoint: WeaponPoint, to_location: Point):

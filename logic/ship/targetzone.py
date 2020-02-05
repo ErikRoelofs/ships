@@ -1,9 +1,12 @@
+from pygame.surface import Surface
+
 from logic.debug.debug import Debug
 from logic.ship.hitzone import Hitzone
 from logic.ship.subsystems import Subsystem, State
 from logic.ship_math.line import Line
 from logic.ship_math.location import Location
 from logic.ship_math.point import WeaponPoint
+from visuals.weapons import WeaponRenderer
 
 
 def get_target_line(my_location: Location, hardpoint: WeaponPoint, target: Hitzone) -> Line:
@@ -96,3 +99,13 @@ class TargetZone(Subsystem):
             else:
                 target_line = get_target_line(location, hardpoint, target)
                 target_line.debug_draw_raw(surface, color=(255, 0, 0))
+
+    def draw_status(self, surface: Surface):
+        i = 0
+        j = 0
+        for weapon in self.weapons:
+            surface.blit(WeaponRenderer.get_weapon_surface(weapon), (5 + i*10, 5 + j*10))
+            i += 1
+            if i > 3:
+                i = 0
+                j += 1
