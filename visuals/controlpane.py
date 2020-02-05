@@ -37,7 +37,10 @@ class SubsystemRenderer:
         'both': ImageData('ui/subsystems/both.png', transparent=False),
     }
     font = pygame.font.SysFont('Comic Sans MS', 10)
-
+    light_on = pygame.Surface((20, 30))
+    light_on.fill((0, 255, 0))
+    light_off = pygame.Surface((20, 30))
+    light_off.fill((255, 0, 0))
 
 
     def __init__(self, system: Subsystem):
@@ -54,9 +57,30 @@ class SubsystemRenderer:
         self.label = SubsystemRenderer.font.render(system.name, True, (255, 255, 255))
 
     def draw(self, surface, offset: Point):
+        # main pane
         rect = self.image.rect
         rect.center = offset.as_tuple()
         surface.blit(self.image.image, rect)
+
+        # name
         text_position = (offset.x - 60, offset.y - 40)
         surface.blit(self.label, text_position)
 
+        # indicator lights
+        on_position = (offset.x, offset.y + 3)
+        if self.system.state.on:
+            surface.blit(SubsystemRenderer.light_on, on_position)
+        else:
+            surface.blit(SubsystemRenderer.light_off, on_position)
+        if self.system.has_aux:
+            aux_position = (offset.x, offset.y - 33)
+            if self.system.state.aux:
+                surface.blit(SubsystemRenderer.light_on, aux_position)
+            else:
+                surface.blit(SubsystemRenderer.light_off, aux_position)
+        if self.system.has_overload:
+            overload_position = (offset.x + 35, offset.y - 33)
+            if self.system.state.overload:
+                surface.blit(SubsystemRenderer.light_on, overload_position)
+            else:
+                surface.blit(SubsystemRenderer.light_off, overload_position)
