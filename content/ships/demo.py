@@ -3,7 +3,7 @@ import random
 from logic.ship.hitzone import Hitzone
 from logic.ship.image_data import ImageData
 from logic.ship.ship import Ship
-from logic.ship.subsystems import Subsystems, Engine, Bridge, Reactor, Engineering
+from logic.ship.subsystems import Subsystems, Engine, Bridge, Reactor, Engineering, ShieldControl
 from logic.ship.targetzone import TargetZone
 from logic.ship.weapon import BeamLaser, TurboLaser
 from logic.ship_math.line import HitLine, FireArcLine
@@ -30,6 +30,7 @@ class Demo(Ship):
             [
                 Engine(40, 0.2, 15, 0.1),
                 Engineering(5),
+                ShieldControl(5)
             ],
             [
                 Hitzone(

@@ -169,12 +169,34 @@ class ShieldControl(Subsystem):
         if self.state.aux:
             restore_value += self.aux_repair_value
 
+        # repair one at a time
+        # find the most damaged shield (by %)
+        # increase it by 1
+        # if nothing is damaged, return
+        from logic.ship.hitzone import Hitzone
+        shields = ship.subsystem.get_all_by_type(Hitzone)
         while restore_value > 0:
-            # repair one at a time
-                # find the most damaged shield (by %)
-                # increase it by 1
-                # if nothing is damaged, return
-            restore_value -= 1
+            lowest = None
+            for shield in shields:
+                print(shield)
+                if  (lowest is None and shield.shields < shield.max_shields) \
+                        or (lowest is not None and shield.shields / shield.max_shields < lowest.shields / lowest.max_shields):
+                    lowest = shield
+
+            if not lowest:
+                # try aux shields instead
+                for shield in shields:
+                    if (lowest is None and shield.aux_shields < shield.max_aux_shields) \
+                            or shield.aux_shields / shield.max_aux_shields < lowest.aux_shields / lowest.max_aux_shields:
+                        lowest = shield
+
+                if not lowest:
+                    return
+                lowest.aux_shields += 1
+                restore_value -= 1
+            else:
+                lowest.shields += 1
+                restore_value -= 1
 
 
 class Communications(Subsystem):
