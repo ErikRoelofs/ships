@@ -2,6 +2,7 @@ class Debug:
 
     COMBAT = 2
     MATH = 1
+    SHIP_STATUS = 3
 
     def __init__(self):
         self.active = False

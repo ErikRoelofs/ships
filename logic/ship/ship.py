@@ -39,7 +39,7 @@ class Ship (Entity):
         self.fire_control = FireControl(self)
         self.faction = faction
 
-        print("Using %s of %s power" % (self.subsystem.get_power_usage(), self.subsystem.get_power_available()))
+        Debug().log("Using %s of %s power" % (self.subsystem.get_power_usage(), self.subsystem.get_power_available()), Debug.SHIP_STATUS)
 
     def draw(self, surface):
         if Debug().is_active():

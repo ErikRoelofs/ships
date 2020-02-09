@@ -33,8 +33,6 @@ def main():
     screen = pygame.display.set_mode(SCREENRECT.size, 0)
     clock = pygame.time.Clock()
 
-    print("loading the images")
-
     turn = Turn(10)
 
     demoship1 = Demo(Location(Point(150, 450), -0.2), 1)

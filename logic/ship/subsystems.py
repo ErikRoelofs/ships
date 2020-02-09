@@ -178,8 +178,7 @@ class ShieldControl(Subsystem):
         while restore_value > 0:
             lowest = None
             for shield in shields:
-                print(shield)
-                if  (lowest is None and shield.shields < shield.max_shields) \
+                if (lowest is None and shield.shields < shield.max_shields) \
                         or (lowest is not None and shield.shields / shield.max_shields < lowest.shields / lowest.max_shields):
                     lowest = shield
 

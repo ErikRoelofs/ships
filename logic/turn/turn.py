@@ -43,13 +43,11 @@ class Turn:
         return self.duration_left / self.duration
 
     def end_turn(self):
-        print("turn ending")
         self.ended = True
         for ship in Space.get_ships():
             ship.end_turn()
 
     def start_next(self):
-        print("turn starting")
         assert self.ended
         self.duration_left = self.duration
         self.ended = False
