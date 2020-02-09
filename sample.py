@@ -53,10 +53,9 @@ def main():
     space_down = False
     pause = False
 
-    from visuals.controlpane import ControlPane  # import after init
-    from visuals.controllayout import layout_from_ship
-    layout = layout_from_ship(demoship1)
-    panel = ControlPane(demoship1, layout)
+    from visuals.hud import Hud
+    Hud.set_active_ship(demoship1)
+    Hud.clear_active_ship()
 
     turn.start_next()
 
@@ -76,7 +75,7 @@ def main():
                 turn.end_turn()
                 turn.start_next()
 
-            panel.draw(screen)
+            Hud.draw(screen)
 
         keystate = pygame.key.get_pressed()
         if keystate[K_ESCAPE] or pygame.event.peek(QUIT):
