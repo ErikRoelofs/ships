@@ -78,13 +78,14 @@ def main():
             turn.update(dt)
             turn.draw(screen)
 
-            pygame.display.update()
 
             if turn.done():
                 turn.end_turn()
                 turn.start_next()
 
-            Hud.draw(screen)
+            #Hud.draw(screen)
+            pygame.display.update()
+
 
         keystate = pygame.key.get_pressed()
         if keystate[K_ESCAPE] or pygame.event.peek(QUIT):

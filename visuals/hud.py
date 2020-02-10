@@ -18,10 +18,7 @@ class Hud:
 
     @classmethod
     def clear_active_ship(cls):
+        if cls.panel:
+            cls.panel.kill()
         cls.active = None
         cls.panel = None
-
-    @classmethod
-    def draw(cls, screen: Surface):
-        if cls.panel:
-            cls.panel.draw(screen)

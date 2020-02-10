@@ -11,3 +11,5 @@ class Input:
             ship = Space.get_ship_at_location(pos)
             if ship:
                 Hud.set_active_ship(ship)
+            else:
+                Hud.clear_active_ship()
