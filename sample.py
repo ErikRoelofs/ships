@@ -5,6 +5,8 @@
 import pygame
 from pygame.locals import *
 
+from visuals.input import Input
+
 pygame.init()
 
 from content.ships.demo import Demo
@@ -54,13 +56,20 @@ def main():
     pause = False
 
     from visuals.hud import Hud
-    Hud.set_active_ship(demoship1)
-    Hud.clear_active_ship()
+
 
     turn.start_next()
 
     while 1:
-        pygame.event.pump()
+        ev = pygame.event.get()
+        for event in ev:
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pos = pygame.mouse.get_pos()
+                Input.handle_mouse(Point(pos[0], pos[1]), 'left')
+
+            if event.type == pygame.QUIT:
+                break
+
         clock.tick(FRAMES_PER_SEC)
         dt = clock.get_time() / 1000
         screen.fill((0, 0, 0))

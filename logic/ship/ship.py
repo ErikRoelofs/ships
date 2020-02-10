@@ -8,6 +8,7 @@ from logic.ship.hitzone import Hitzone
 from logic.ship.image_data import ImageData
 from logic.ship.subsystems import Subsystems, Subsystem, Engine, Bridge
 from logic.ship.targetzone import TargetZone
+from logic.ship_math.line import Line
 from logic.ship_math.location import Location
 from logic.turn.plan import Plan
 
@@ -106,3 +107,14 @@ class Ship (Entity):
         else:
             Debug().log("Hull down!", Debug.COMBAT)
             self.kill()
+
+    def position_is_in_ship(self, pos) -> bool:
+        for zone in self.get_hittable_zones():
+            # a line from position to the aim point should not cross the hitlines
+            # intersects at least one hitline check
+            intersects_hit_line = False
+            target_line = Line(pos, zone.aiming_point)
+            for hitline in zone.hit_lines:
+                if hitline.intersects(target_line):
+                    return False
+        return True
