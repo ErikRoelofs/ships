@@ -1,7 +1,7 @@
 from pygame.surface import Surface
 
 from logic.debug.debug import Debug
-from logic.ship.hit import Hit
+from logic.ship.hit import Hit, Impact
 from logic.ship.subsystems import Subsystem, State
 from logic.ship_math.line import HitLine
 from logic.ship_math.location import Location
@@ -51,20 +51,25 @@ class Hitzone(Subsystem):
         else:
             if hit_type == Hit.MISS:
                 Debug().log("It's a miss for %s!" % self.debug_name, Debug.COMBAT)
-                return
+                return Impact.MISS
             if hit_type == Hit.PIERCING:
                 Debug().log("It's a piercing hit for %s!" % self.debug_name, Debug.COMBAT)
                 self.ship.apply_hit(hit_type)
-                return
+                if (self.state.aux and self.aux_shields > 0) or (self.state.on and self.shields > 0):
+                    return Impact.PENETRATED
+                return Impact.ON_HULL
             if self.state.aux and self.aux_shields > 0:
                 self.aux_shields -= 1
                 Debug().log("Aux shields down to %s for %s!" % (self.aux_shields, self.debug_name), Debug.COMBAT)
+                return Impact.SHIELDED
             elif self.state.on and self.shields > 0:
                 self.shields -= 1
                 Debug().log("Shields down to %s for %s!" % (self.shields, self.debug_name), Debug.COMBAT)
+                return Impact.SHIELDED
             else:
                 Debug().log("Shields depleted (or off) for %s!" % self.debug_name, Debug.COMBAT)
                 self.ship.apply_hit(hit_type)
+                return Impact.ON_HULL
 
     def draw_status(self, surface: Surface):
         text = Fonts.shields.render(str(self.shields) + '/' + str(self.max_shields), True, (0, 0, 255))

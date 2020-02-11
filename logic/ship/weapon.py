@@ -34,7 +34,7 @@ class Weapon:
 
     def fire(self, ship: Ship, hardpoint: WeaponPoint, target_zone: Hitzone):
         Debug().log("Boom!", Debug.COMBAT)
-        target_zone.apply_hit(self.roll_hit_type())
+        hit_effect = target_zone.apply_hit(self.roll_hit_type())
         self.create_entity(ship, hardpoint, target_zone)
 
     def create_entity(self, ship, hardpoint, target_zone):
