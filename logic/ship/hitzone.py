@@ -47,7 +47,7 @@ class Hitzone(Subsystem):
 
     def apply_hit(self, hit_type):
         if self.origin:
-            self.origin.apply_hit(hit_type)
+            return self.origin.apply_hit(hit_type)
         else:
             if hit_type == Hit.MISS:
                 Debug().log("It's a miss for %s!" % self.debug_name, Debug.COMBAT)

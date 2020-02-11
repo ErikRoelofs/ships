@@ -4,7 +4,7 @@ import pygame
 
 from logic.debug.debug import Debug
 from logic.entity import Entity
-from logic.ship.hit import Hit
+from logic.ship.hit import Hit, Impact
 from logic.ship.hitzone import Hitzone
 from logic.ship.ship import Ship
 from logic.ship_math.point import WeaponPoint, Point
@@ -35,9 +35,9 @@ class Weapon:
     def fire(self, ship: Ship, hardpoint: WeaponPoint, target_zone: Hitzone):
         Debug().log("Boom!", Debug.COMBAT)
         hit_effect = target_zone.apply_hit(self.roll_hit_type())
-        self.create_entity(ship, hardpoint, target_zone)
+        self.create_entity(ship, hardpoint, target_zone, hit_effect)
 
-    def create_entity(self, ship, hardpoint, target_zone):
+    def create_entity(self, ship, hardpoint, target_zone, hit_effect):
         pass
 
     def roll_hit_type(self):
@@ -55,8 +55,8 @@ class BeamLaser(Weapon):
     def __init__(self):
         Weapon.__init__(self, WeaponType.beam_laser())
 
-    def create_entity(self, ship: Ship, hardpoint: WeaponPoint, target_zone: Hitzone):
-        active_turn().register_entity(BeamEffect(ship, hardpoint, target_zone.aiming_point))
+    def create_entity(self, ship: Ship, hardpoint: WeaponPoint, target_zone: Hitzone, hit_effect: int):
+        active_turn().register_entity(BeamEffect(ship, hardpoint, target_zone.aiming_point, hit_effect))
 
     def hit_table(self):
         return [Hit.MISS, Hit.MISS, Hit.MISS, Hit.WEAK, Hit.WEAK, Hit.WEAK, Hit.REGULAR, Hit.REGULAR, Hit.REGULAR, Hit.PIERCING]
@@ -69,8 +69,8 @@ class TurboLaser(Weapon):
     def __init__(self):
         Weapon.__init__(self, WeaponType.turbo_laser())
 
-    def create_entity(self, ship: Ship, hardpoint: WeaponPoint, target_zone: Hitzone):
-        active_turn().register_entity(TurboBeamEffect(ship, hardpoint, target_zone.aiming_point))
+    def create_entity(self, ship: Ship, hardpoint: WeaponPoint, target_zone: Hitzone, hit_effect: int):
+        active_turn().register_entity(TurboBeamEffect(ship, hardpoint, target_zone.aiming_point, hit_effect))
 
     def hit_table(self):
         return [Hit.MISS, Hit.MISS, Hit.MISS, Hit.WEAK, Hit.WEAK, Hit.WEAK, Hit.REGULAR, Hit.REGULAR, Hit.REGULAR, Hit.PIERCING]
@@ -80,13 +80,16 @@ class TurboLaser(Weapon):
 
 
 class BeamEffect(Entity):
-    def __init__(self, ship: Ship, hardpoint: WeaponPoint, to_location: Point):
+    def __init__(self, ship: Ship, hardpoint: WeaponPoint, to_location: Point, hit_effect: int):
         Entity.__init__(self)
         self.ship = ship
         self.hardpoint = hardpoint
         self.to_location = to_location
+        if hit_effect == Impact.MISS:
+            self.to_location.move(random.randint(-35, 35), random.randint(-35, 35))
         self.max_duration = 1
         self.duration = self.max_duration
+        self.hit_effect = hit_effect
 
     def update(self, dt):
         self.duration -= dt
@@ -119,16 +122,25 @@ class BeamEffect(Entity):
             self.to_location.as_int_tuple(),
             1
         )
+        if self.hit_effect == Impact.SHIELDED:
+            pygame.draw.circle(screen, (0, 0, 255), self.to_location.as_int_tuple(), 15, 5)
+        if self.hit_effect == Impact.ON_HULL:
+            pygame.draw.circle(screen, (255, 0, 0), self.to_location.as_int_tuple(), 15, 5)
+        if self.hit_effect == Impact.PENETRATED:
+            pygame.draw.circle(screen, (255, 0, 255), self.to_location.as_int_tuple(), 15, 5)
 
 
 class TurboBeamEffect(Entity):
-    def __init__(self, ship: Ship, hardpoint: WeaponPoint, to_location: Point):
+    def __init__(self, ship: Ship, hardpoint: WeaponPoint, to_location: Point, hit_effect: int):
         Entity.__init__(self)
         self.ship = ship
         self.hardpoint = hardpoint
         self.to_location = to_location
+        if hit_effect == Impact.MISS:
+            self.to_location.move(random.randint(-35, 35), random.randint(-35, 35))
         self.max_duration = 2
         self.duration = self.max_duration
+        self.hit_effect = hit_effect
 
     def update(self, dt):
         self.duration -= dt
@@ -162,3 +174,9 @@ class TurboBeamEffect(Entity):
             3
         )
 
+        if self.hit_effect == Impact.SHIELDED:
+            pygame.draw.circle(screen, (0, 0, 255), self.to_location.as_int_tuple(), 15, 5)
+        if self.hit_effect == Impact.ON_HULL:
+            pygame.draw.circle(screen, (255, 0, 0), self.to_location.as_int_tuple(), 15, 5)
+        if self.hit_effect == Impact.PENETRATED:
+            pygame.draw.circle(screen, (255, 0, 255), self.to_location.as_int_tuple(), 15, 5)
