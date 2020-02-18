@@ -9,6 +9,9 @@ from visuals.input import Input
 
 pygame.init()
 
+from logic.ship.subsystems import Engine
+from logic.turn.subsystem import SubsystemPlan, SubsystemTurnOn
+
 from content.ships.demo import Demo
 from logic.ship_math.location import Location
 from logic.ship_math.point import Point
@@ -46,17 +49,17 @@ def main():
         MovementSegment(20, 0.1, 2),
         MovementSegment(60, -0.2, 4),
     ])
+    subsystem_plan = SubsystemPlan()
+    subsystem_plan.add_step(SubsystemTurnOn(demoship1.subsystem.get_one_by_type(Engine)))
     plan = Plan(turn)
     plan.set_movement_plan(movement_plan)
+    plan.set_subsystem_plan(subsystem_plan)
 
     demoship1.set_plan(plan)
     demoship2.set_plan(Plan(turn))
 
     space_down = False
     pause = False
-
-    from visuals.hud import Hud
-
 
     turn.start_next()
 

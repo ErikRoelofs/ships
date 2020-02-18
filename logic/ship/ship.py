@@ -10,7 +10,7 @@ from logic.ship.subsystems import Subsystems, Subsystem, Engine, Bridge
 from logic.ship.targetzone import TargetZone
 from logic.ship_math.line import Line
 from logic.ship_math.location import Location
-from logic.turn.plan import Plan
+from logic.turn.plan import Plan, empty_plan
 
 
 class Ship (Entity):
@@ -90,12 +90,14 @@ class Ship (Entity):
         self.plan = plan
 
     def execute_plan(self):
+        self.plan.subsystem_plan.execute()
         self.fire_control.prepare(self.plan.turn)
         for system in self.subsystem.get_all():
             system.start_turn(self)
         self.subsystem.get_reactor().set_power_use(self.subsystem.get_power_usage())
 
     def end_turn(self):
+        self.plan = empty_plan()
         for system in self.subsystem.get_all():
             system.end_turn(self)
 

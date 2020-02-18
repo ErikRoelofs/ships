@@ -1,7 +1,7 @@
 from content.ships.demo import Demo
 from logic.ship.hitzone import Hitzone
 from logic.ship.ship import Ship
-from logic.ship.subsystems import Subsystem, Engineering, ShieldControl
+from logic.ship.subsystems import Subsystem, Engineering, ShieldControl, Engine
 from logic.ship.targetzone import TargetZone
 
 
@@ -25,8 +25,9 @@ def layout_from_ship(ship: Ship) -> ControlLayout:
         layout.add_control((1, 3), ship.subsystem.get_reactor())
         layout.add_control((1, 4), ship.subsystem.get_one_by_type(Engineering))
         layout.add_control((1, 5), ship.subsystem.get_one_by_type(ShieldControl))
-        layout.add_control((1, 6), weapons[3])
-        layout.add_control((1, 7), shields[3])
+        layout.add_control((1, 6), ship.subsystem.get_one_by_type(Engine))
+        layout.add_control((1, 7), weapons[3])
+        layout.add_control((1, 8), shields[3])
         layout.add_control((0, 2), shields[0])
         layout.add_control((0, 3), weapons[0])
         layout.add_control((2, 2), shields[2])

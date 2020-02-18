@@ -15,7 +15,7 @@ def get_target_line(my_location: Location, hardpoint: WeaponPoint, target: Hitzo
 
 class TargetZone(Subsystem):
     def __init__(self, fire_arc_lines, hardpoints, weapons, aux_weapons):
-        initial_state = State(on=True, aux=False, overload=False)
+        initial_state = State(on=False, aux=False, overload=False)
         Subsystem.__init__(self, "Weapons", initial_state, len(aux_weapons) > 0, True)
         self.fire_arc_lines = fire_arc_lines
         self.hardpoints = hardpoints

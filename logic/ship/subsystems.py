@@ -48,11 +48,40 @@ class Subsystem:
     def draw_status(self, surface):
         pass
 
+    def turn_on(self):
+        assert not self.state.on, "System is not off!"
+        self.state.on = True
+
+    def turn_on_aux(self):
+        assert self.has_aux, "System has no aux!"
+        assert self.state.on, "System is not active!"
+        self.state.aux = True
+
+    def turn_on_overload(self):
+        assert self.has_overload, "System cannot overload!"
+        assert self.state.on, "System is not active!"
+        self.state.overload = True
+
+    def turn_off(self):
+        assert self.can_power_down, "System cannot power down!"
+        assert self.state.on, "System is not on!"
+        self.state.on = False
+
+    def turn_off_aux(self):
+        assert self.has_aux, "System has no aux!"
+        assert self.state.aux, "Aux is not active!"
+        self.state.aux = False
+
+    def turn_off_overload(self):
+        assert self.has_overload, "System cannot overload!"
+        assert self.state.overload, "Overload is not active!"
+        self.state.overload = False
+
 
 class Engine(Subsystem):
     def __init__(self, max_speed, turn_speed, thrust, turn_thrust, can_boost=False, can_evade=False, initial_state: State=None):
         if not initial_state:
-            initial_state = State(on=True, aux=False, overload=False)
+            initial_state = State(on=False, aux=False, overload=False)
         Subsystem.__init__(self, "Engine", initial_state, can_boost, can_evade)
         self.max_speed = max_speed
         self.max_turn_speed = turn_speed
@@ -141,7 +170,7 @@ class Reactor(Subsystem):
 
 class Engineering(Subsystem):
     def __init__(self, repair_value: int, can_fix_hull=False, can_prevent_fires=False):
-        initial_state = State(on=True, aux=False, overload=False)
+        initial_state = State(on=False, aux=False, overload=False)
         Subsystem.__init__(self, "Engineering", initial_state, can_fix_hull, can_prevent_fires)
         self.repair_value = repair_value
 
@@ -157,7 +186,7 @@ class Engineering(Subsystem):
 
 class ShieldControl(Subsystem):
     def __init__(self, repair_value: int, aux_repair_value: int=0, can_overlap=False):
-        initial_state = State(on=True, aux=False, overload=False)
+        initial_state = State(on=False, aux=False, overload=False)
         Subsystem.__init__(self, "Shield ctrl", initial_state, aux_repair_value > 0, can_overlap)
         self.repair_value = repair_value
         self.aux_repair_value = aux_repair_value
@@ -200,7 +229,7 @@ class ShieldControl(Subsystem):
 
 class Communications(Subsystem):
     def __init__(self, squadron_command, can_boost=False, can_enhance=False):
-        initial_state = State(on=True, aux=False, overload=False)
+        initial_state = State(on=False, aux=False, overload=False)
         Subsystem.__init__(self, "Comms", initial_state, can_boost, can_enhance)
         self.squadron_command = squadron_command
 
