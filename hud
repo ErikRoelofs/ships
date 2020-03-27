@@ -1,0 +1,65 @@
+screen division (during game):
+- main space display
+  - supports scrolling; camera movement; zooming; etc
+- main HUD
+  - static
+  - supports various panes
+    - a selected ship
+    - ?
+
+
+input handling:
+
+- determine main HUD element clicked
+  - pass on command
+
+
+HUD requirements:
+
+for a ship:
+- basic ship info (name, class, title)
+- information (ship's layout & current state)
+  - shields, zones & weapons
+  - damage taken
+  - system values (reactor, engineering, shield charge, hangar)
+- system controls (turning systems on/off & current state)
+- general controls (setting course, target priorities, fighter priorities)
+(enemy ships don't have controls)
+
+MAIN SCREEN:
+ - show extended targeting lines; weapon range lines; active weapons, shields
+
+FIELD 1:
+ - basic info
+ - ship image; with targeting lines, active shields
+
+FIELD 2:
+ - subsystem controls; active states w toggles and values
+
+FIELD 3:
+ - movement control
+ - priority controls (targets & fighters)
+
+
+for a squadron:
+- basic squadron info (name, class)
+- information
+  - hull value
+  - weapon systems
+  - commanding vessel
+  - traits
+- orders
+  - change commanding vessel
+
+FIELD 1:
+  - ship image
+  - basic info
+
+FIELD 2:
+  - commanding vessel (+change)
+  - current relayed orders
+
+for the fleet:
+- fleet names, short-state
+
+- one tile per ship

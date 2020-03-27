@@ -25,7 +25,7 @@ if not pygame.image.get_extended():
 
 # constants
 FRAMES_PER_SEC = 40
-SCREENRECT = pygame.Rect(0, 0, 1200, 900)
+SCREENRECT = pygame.Rect(0, 0, 1600, 1000)
 
 # some globals for friendly access
 dirtyrects = []  # list of update_rects
@@ -81,14 +81,11 @@ def main():
             turn.update(dt)
             turn.draw(screen)
 
-
             if turn.done():
                 turn.end_turn()
                 turn.start_next()
 
-            #Hud.draw(screen)
             pygame.display.update()
-
 
         keystate = pygame.key.get_pressed()
         if keystate[K_ESCAPE] or pygame.event.peek(QUIT):
